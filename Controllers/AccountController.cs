@@ -36,10 +36,45 @@ public AccountController(AppDbContext context) => _context = context;
                 HttpContext.Session.SetString("UserType", "Employer");
                 return RedirectToAction("EmployerDashboard");
             }
+var admin = await _context.Admins
+    .FirstOrDefaultAsync(a => a.Email == Email && a.Password == Password);
 
+if (admin != null)
+{
+    HttpContext.Session.SetInt32("AdminId", admin.Id);
+    HttpContext.Session.SetString("UserType", "Admin");
+    return RedirectToAction("AdminDashboard");
+}
             ModelState.AddModelError("", "Invalid email or password.");
             return View();
         }
+        [HttpGet]
+public IActionResult RegisterAdmin()
+{
+    return View();
+}
+[HttpGet]
+public IActionResult AdminDashboard()
+{
+    if (HttpContext.Session.GetString("UserType") != "Admin")
+    {
+        return RedirectToAction("Login");
+    }
+
+    return View();
+}
+
+[HttpPost]
+public async Task<IActionResult> RegisterAdmin(Admin model)
+{
+    _context.Admins.Add(model);
+    await _context.SaveChangesAsync();
+
+    HttpContext.Session.SetInt32("AdminId", model.Id);
+    HttpContext.Session.SetString("UserType", "Admin");
+
+    return RedirectToAction("AdminDashboard");
+}
 
         [HttpGet]
 public IActionResult RegisterJobseeker()
