@@ -1,0 +1,114 @@
+@{
+    ViewData["Title"] = "Register Employer";
+}
+
+<div class="container py-5" style="max-width: 800px;">
+    <h2 class="fw-bold mb-4 text-center">Register as an Employer</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">Company Name</label>
+            <input type="text" name="CompanyName" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Contact Person (First & Last Name)</label>
+            <input type="text" name="ContactName" class="form-control" required>
+        </div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Your Position</label>
+        <input type="text" name="ContactPosition" class="form-control">
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Direct Phone Number (text/call)</label>
+        <input type="text" name="DirectPhone" class="form-control">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="Email" class="form-control" required>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" name="Password" class="form-control" required>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Phone</label>
+        <input type="text" name="Phone" class="form-control" required>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Direct Phone Number (text/call)</label>
+        <input type="text" name="DirectPhone" class="form-control">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Street Address</label>
+        <input type="text" name="StreetAddress" class="form-control">
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Website URL</label>
+        <input type="text" name="WebsiteUrl" class="form-control">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Operating Region (remote/local)</label>
+        <input type="text" name="OperatingRegion" class="form-control" placeholder="e.g. Remote - West Africa, or On-site - Lagos">
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">EIN or VAT Number</label>
+        <input type="text" name="TaxId" class="form-control" required>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label class="form-label">City</label>
+        <input type="text" name="City" class="form-control">
+    </div>
+    <div class="col-md-4 mb-3">
+        <label class="form-label">State</label>
+        <input type="text" name="State" class="form-control">
+    </div>
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Zip Code</label>
+        <input type="text" name="Zip" class="form-control">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Business License or Certificate (verification document)</label>
+        <input type="file" name="verificationDocument" class="form-control" accept=".pdf,.jpg,.png">
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Company Logo</label>
+        <input type="file" name="logo" class="form-control" accept=".jpg,.png">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Type of Business</label>
+        <input type="text" name="BusinessType" class="form-control">
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label"># of Employees</label>
+        <input type="number" name="EmployeeCount" class="form-control">
+    </div>
+</div>
+<div class="mb-3">
+<button type="submit" class="btn btn-primary w-100">Register</button>
+            </div>
+        </form>
+    </div>

@@ -1,0 +1,223 @@
+@model List<InsiderCareers.Models.Job>
+@{
+    ViewData["Title"] = "Employer Dashboard";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Employer Dashboard - InsiderCareers</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body class="d-flex" style="min-height: 100vh;">
+
+    <partial name="_Sidebar" />
+
+    <!-- Main content -->
+    <div class="flex-grow-1 p-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+            <h2 class="fw-bold mb-0">Employer Dashboard</h2>
+
+            <div class="position-relative" style="width: 280px;">
+                <div class="position-relative">
+                    <i class="bi bi-search position-absolute text-white-50" style="left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px;"></i>
+                    <input type="text" id="dashboardSearch"
+                           class="form-control ps-5"
+                           placeholder="Search"
+                           autocomplete="off"
+                           oninput="filterDashboardSearch()"
+                           style="border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; height: 40px;" />
+                </div>
+                <div id="dashboardSearchResults" class="position-absolute w-100"
+                     style="z-index: 1000; display: none; background: #1c1c1e; border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; margin-top: 6px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.4);"></div>
+            </div>
+        </div>
+
+        <!-- Stat circles -->
+        <div class="row mb-4 text-center">
+            <div class="col-md-3 d-flex align-items-center gap-3">
+                <div class="stat-circle">@Model.Count</div>
+                <div class="text-start">
+                    <div class="fw-bold">Jobs Posted</div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-center gap-3">
+                <div class="stat-circle">@ViewData["ApplicantCount"]</div>
+                <div class="text-start">
+                    <div class="fw-bold">Applicants</div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-center gap-3">
+                <div class="stat-circle">0</div>
+                <div class="text-start">
+                    <div class="fw-bold">Hired</div>
+                    <small class="text-white-50">total</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="panel">
+                    <h5 class="mb-3">Views &amp; Applications</h5>
+                    <canvas id="statsChart" height="90"></canvas>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel text-center">
+                    <h5 class="mb-3">Applicant Sources</h5>
+                    <canvas id="pieChart" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages + Candidates -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="panel">
+                    <h5 class="mb-3">Messages</h5>
+                    <p class="text-white-50 mb-0">No messages yet.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel">
+                    <h5 class="mb-3">Recent Applicants</h5>
+                    <p class="text-white-50 mb-0">No applicants yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Postings table -->
+        <div class="panel">
+            <h5 class="mb-3">My Postings</h5>
+            <table class="table table-dark table-borderless mb-0">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Posted</th>
+                        <th>Applicants</th>
+                    </tr>
+                </thead>
+                <tbody>
+@if (!Model.Any())
+{
+                    <tr><td colspan="4" class="text-center text-white-50">No postings yet.</td></tr>
+}
+else
+{
+    @foreach (var job in Model)
+    {
+                    <tr>
+                        <td>@job.Title</td>
+                        <td>@job.Status</td>
+                        <td>@job.PostedDate.ToShortDateString()</td>
+                        <td>@job.Applications.Count</td>
+                    </tr>
+    }
+}
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            new Chart(document.getElementById('statsChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Views',
+                        data: [0, 0, 0, 0, 0, 0, 0],
+                        borderColor: '#4b3fd6',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    plugins: { legend: { labels: { color: '#fff' } } },
+                    scales: {
+                        x: { ticks: { color: '#fff' } },
+                        y: { ticks: { color: '#fff' } }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('pieChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Direct', 'Referral', 'Search'],
+                    datasets: [{
+                        data: [1, 1, 1],
+                        backgroundColor: ['#4b3fd6', '#6a5aff', '#8f7fff']
+                    }]
+                },
+                options: {
+                    plugins: { legend: { labels: { color: '#fff' } } }
+                }
+            });
+        </script>
+    </div>
+
+    <script>
+        const dashboardItems = [
+            { name: "Dashboard", url: "/Account/EmployerDashboard" },
+            { name: "Candidates", url: "/Account/Candidates" },
+            { name: "Message", url: "#" },
+            { name: "Calendar", url: "#" },
+            { name: "Setting", url: "#" },
+            { name: "Contact Support", url: "#" },
+            { name: "Applicants", url: "/Account/EmployerDashboard#applicants" },
+            { name: "Hired", url: "/Account/EmployerDashboard#hired" },
+            { name: "Views & Applications", url: "/Account/EmployerDashboard#stats" },
+            { name: "Applicant Sources", url: "/Account/EmployerDashboard#sources" },
+            { name: "Job Postings", url: "/Account/EmployerDashboard#postings" },
+            { name: "Post a Job", url: "/Jobs/Post" },
+            { name: "Sponsored Job Billing", url: "/Account/Candidates#billing" }
+        ];
+
+        function filterDashboardSearch() {
+            const query = document.getElementById('dashboardSearch').value.toLowerCase();
+            const resultsBox = document.getElementById('dashboardSearchResults');
+            resultsBox.innerHTML = '';
+
+            if (!query) {
+                resultsBox.style.display = 'none';
+                return;
+            }
+
+            const matches = dashboardItems.filter(item => item.name.toLowerCase().includes(query));
+
+            if (matches.length === 0) {
+                resultsBox.style.display = 'none';
+                return;
+            }
+
+            matches.forEach(item => {
+                const a = document.createElement('a');
+                a.href = item.url;
+                a.className = 'd-block text-decoration-none';
+                a.style.cssText = "padding: 10px 16px; color: #ddd; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.08);";
+                a.textContent = item.name;
+                a.onmouseenter = () => a.style.background = 'rgba(255,255,255,0.08)';
+                a.onmouseleave = () => a.style.background = 'transparent';
+                resultsBox.appendChild(a);
+            });
+
+            resultsBox.style.display = 'block';
+        }
+
+        document.addEventListener('click', function (e) {
+            const box = document.getElementById('dashboardSearchResults');
+            const input = document.getElementById('dashboardSearch');
+            if (!box.contains(e.target) && e.target !== input) {
+                box.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

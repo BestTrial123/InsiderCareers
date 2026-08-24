@@ -1,0 +1,21 @@
+@model List<InsiderCareers.Models.Job>
+@{ ViewData["Title"] = "Jobs"; }
+
+<div class="container py-5">
+    <h2 class="fw-bold mb-4">Open Jobs</h2>
+    @if (!Model.Any())
+    {
+        <p>No jobs posted yet.</p>
+    }
+    else
+    {
+        @foreach (var job in Model)
+        {
+            <div class="mb-3 p-3 border rounded">
+                <h5>@job.Title</h5>
+                <p>@job.Employer?.CompanyName · @job.Location · @job.JobType</p>
+                <p>@job.Description</p>
+            </div>
+        }
+    }
+</div>

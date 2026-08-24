@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Compose";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Compose - InsiderCareers</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+</head>
+<body class="d-flex" style="min-height: 100vh;">
+
+    <partial name="_Sidebar" />
+
+    <div class="flex-grow-1 p-4">
+        <h2 class="fw-bold mb-4">Compose Message</h2>
+        <div class="panel" style="max-width: 1200px;">
+            <form asp-controller="Account" asp-action="Compose" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">To (email)</label>
+                    <input type="email" name="RecipientEmail" class="form-control" required
+                           style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: white;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    <input type="text" name="Subject" class="form-control" required
+                           style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: white;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <textarea name="Body" rows="20" class="form-control" required
+                              style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: white;"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Attachment (resume, cover letter, etc.)</label>
+                    <input type="file" name="attachment" class="form-control" accept=".pdf,.doc,.docx,.jpg,.png">
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Send</button>
+                    <a asp-controller="Account" asp-action="Message" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

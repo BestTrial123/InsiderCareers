@@ -1,0 +1,200 @@
+@model InsiderCareers.Models.JobSeeker
+@{
+    ViewData["Title"] = "Job Seeker Registration";
+}
+
+<style>
+    .js-form-wrap {
+        max-width: 640px;
+        margin: 40px auto;
+        padding: 32px;
+    }
+
+    .js-form-wrap h1 {
+        font-weight: 700;
+        margin-bottom: 24px;
+        color: #fff;
+    }
+
+    .js-field {
+        margin-bottom: 16px;
+    }
+
+    .js-field label {
+        display: block;
+        color: #cfd3e0;
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+
+    .js-field input,
+    .js-field select,
+    .js-field textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+        font-size: 0.95rem;
+    }
+
+    .js-field textarea {
+        resize: vertical;
+        min-height: 90px;
+    }
+
+    .js-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .js-box {
+        border: 1px dashed rgba(255, 255, 255, 0.25);
+        border-radius: 10px;
+        padding: 18px;
+        margin-bottom: 20px;
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .js-box h3 {
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .js-submit-btn {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        border: none;
+        background: #3b5bff;
+        color: #fff;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 8px;
+    }
+
+    .js-submit-btn:hover {
+        background: #2f49d6;
+    }
+</style>
+
+<div class="js-form-wrap">
+    <h1>Job Seeker Registration</h1>
+
+    <form asp-action="RegisterJobseeker" asp-controller="Account" method="post" enctype="multipart/form-data">
+
+        <div class="js-field">
+            <label>Photo</label>
+            <input type="file" name="photo" accept="image/*" />
+        </div>
+
+        <div class="js-row">
+            <div class="js-field">
+                <label>First Name</label>
+                <input asp-for="FirstName" />
+            </div>
+            <div class="js-field">
+                <label>Last Name</label>
+                <input asp-for="LastName" />
+            </div>
+        </div>
+
+        <div class="js-row">
+            <div class="js-field">
+                <label>Date of Birth</label>
+                <input asp-for="DateOfBirth" type="date" />
+            </div>
+            <div class="js-field">
+                <label>Phone Number</label>
+                <input asp-for="Phone" />
+            </div>
+        </div>
+
+        <div class="js-row">
+            <div class="js-field">
+                <label>Email</label>
+                <input asp-for="Email" type="email" />
+            </div>
+            <div class="js-field">
+                <label>Password</label>
+                <input asp-for="Password" type="password" />
+            </div>
+        </div>
+
+        <div class="js-row">
+            <div class="js-field">
+                <label>Gender</label>
+                <select asp-for="Gender">
+                    <option value="">Select</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="js-field">
+                <label>Marital Status</label>
+                <select asp-for="MaritalStatus">
+                    <option value="">Select</option>
+                    <option>Single</option>
+                    <option>Married</option>
+                    <option>Divorced</option>
+                    <option>Widowed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="js-field">
+            <label>Language Spoken</label>
+            <input asp-for="LanguageSpoken" placeholder="e.g. English, French" />
+        </div>
+
+        <div class="js-box">
+            <h3>Resume</h3>
+            <label>Install or attach your resume</label>
+            <input type="file" name="resume" accept=".pdf,.doc,.docx" />
+        </div>
+
+        <div class="js-box">
+            <h3>Cover Letter</h3>
+            <textarea asp-for="CoverLetter" placeholder="Type your cover letter..."></textarea>
+        </div>
+
+        <div class="js-field">
+            <label>Skills (one per line)</label>
+            <textarea asp-for="Skills" placeholder="e.g. Customer Service&#10;Excel&#10;Teamwork"></textarea>
+        </div>
+
+        <div class="js-field">
+            <label>Work History (one per line)</label>
+            <textarea asp-for="WorkHistory" placeholder="e.g. Cashier - ShopRite (2022-2024)"></textarea>
+        </div>
+
+        <div class="js-row">
+            <div class="js-field">
+                <label>Salary Desire ($/hour)</label>
+                <input asp-for="SalaryDesire" type="number" step="0.01" placeholder="15.00" />
+            </div>
+            <div class="js-field">
+                <label>Address</label>
+                <input asp-for="Address" />
+            </div>
+        </div>
+
+        <div class="js-row">
+            <div class="js-field">
+                <label>Country</label>
+                <input asp-for="Country" />
+            </div>
+            <div class="js-field">
+                <label>City</label>
+                <input asp-for="City" />
+            </div>
+        </div>
+
+        <button type="submit" class="js-submit-btn">Create Profile</button>
+    </form>
+</div>

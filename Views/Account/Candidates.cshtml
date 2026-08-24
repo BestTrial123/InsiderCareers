@@ -1,0 +1,81 @@
+@model List<InsiderCareers.Models.Job>
+@{
+    ViewData["Title"] = "Candidates";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Candidates - InsiderCareers</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> <link rel="stylesheet" href="~/css/site.css" /> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body class="d-flex" style="min-height: 100vh;">
+
+    <partial name="_Sidebar" />
+
+        <!-- Main content -->
+    <div class="flex-grow-1 p-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <h2 class="fw-bold mb-0">Candidates</h2>
+    <a asp-controller="Jobs" asp-action="Post" class="btn btn-primary">Post a Job</a>
+</div>
+
+        <h5 class="fw-bold mb-3">Open and Paused Jobs (@Model.Count(j => j.Status == "Open" || j.Status == "Paused"))</h5>
+        <div class="panel mb-4">
+            <table class="table table-dark table-borderless align-middle mb-0">
+                <thead class="text-white-50 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;">
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Candidates</th>
+                        <th>Job Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+@if (!Model.Any())
+{
+    <tr><td colspan="4" class="text-center text-white-50 py-4">No jobs posted yet.</td></tr>
+}
+else
+{
+    @foreach (var job in Model)
+    {
+        <tr>
+            <td>@job.Title</td>
+            <td>@job.Applications.Count</td>
+            <td>@job.Status</td>
+            <td><a asp-controller="Jobs" asp-action="Post" class="text-white-50">View</a></td>
+        </tr>
+    }
+}
+</tbody>
+            </table>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="panel h-100">
+                    <h6 class="fw-bold">Messages (0)</h6>
+                    <p class="text-white-50 mb-0">No messages to review!</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel h-100">
+                    <h6 class="fw-bold">Interviews (0)</h6>
+                    <p class="text-white-50 mb-0">No interviews scheduled!</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel h-100">
+                    <h6 class="fw-bold">Sponsored Job Billing</h6>
+                    <div class="fs-4 fw-bold">$0.00</div>
+                    <small class="text-white-50">For this billing period</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
