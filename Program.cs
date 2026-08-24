@@ -1,7 +1,20 @@
 using InsiderCareers.Models;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
+// Disable file system watching to prevent inotify limit crashes in containers
+var builderOptions = new WebApplicationOptions
+{
+    Args = args
+};
+
+var builder = WebApplication.CreateBuilder(builderOptions);
+
+// Prevent configuration providers from watching appsettings files
+builder.Configuration.Sources.Clear();
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: false)
+    .AddEnvironmentVariables();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -54,4 +67,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
