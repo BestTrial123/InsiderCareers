@@ -45,6 +45,7 @@ if (admin != null)
     HttpContext.Session.SetString("UserType", "Admin");
     return RedirectToAction("AdminDashboard");
 }
+
             ModelState.AddModelError("", "Invalid email or password.");
             return View();
         }
@@ -54,31 +55,20 @@ public IActionResult RegisterAdmin()
     return View();
 }
 [HttpGet]
-public IActionResult AdminDashboard()
+public async Task<IActionResult> AdminDashboard()
 {
     if (HttpContext.Session.GetString("UserType") != "Admin")
     {
         return RedirectToAction("Login");
     }
 
-    return View();
-}
+    var totalClicks = await _context.Jobs.SumAsync(j => j.ClickCount);
+    decimal ratePerClick = 0.15m;
+    var totalEarnings = totalClicks * ratePerClick;
 
-[HttpPost]
-public async Task<IActionResult> RegisterAdmin(Admin model)
-{
-    _context.Admins.Add(model);
-    await _context.SaveChangesAsync();
+    ViewBag.TotalClicks = totalClicks;
+    ViewBag.TotalEarnings = totalEarnings;
 
-    HttpContext.Session.SetInt32("AdminId", model.Id);
-    HttpContext.Session.SetString("UserType", "Admin");
-
-    return RedirectToAction("AdminDashboard");
-}
-
-        [HttpGet]
-public IActionResult RegisterJobseeker()
-{
     return View();
 }
    [HttpGet]
