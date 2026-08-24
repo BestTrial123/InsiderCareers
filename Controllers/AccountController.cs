@@ -62,10 +62,15 @@ public async Task<IActionResult> AdminDashboard()
         return RedirectToAction("Login");
     }
 
+    var adminId = HttpContext.Session.GetInt32("AdminId");
+    var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Id == adminId);
+
     var totalClicks = await _context.Jobs.SumAsync(j => j.ClickCount);
     decimal ratePerClick = 0.15m;
     var totalEarnings = totalClicks * ratePerClick;
 
+    ViewBag.AdminName = admin?.FullName;
+    ViewBag.AdminEmail = admin?.Email;
     ViewBag.TotalClicks = totalClicks;
     ViewBag.TotalEarnings = totalEarnings;
 

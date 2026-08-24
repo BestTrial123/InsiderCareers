@@ -2,8 +2,13 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<h2>Admin Dashboard</h2>
-<p>Welcome, Administrator.</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Admin Dashboard</h2>
+        <p>Welcome, Administrator.</p>
+    </div>
+    <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">Logout</a>
+</div>
 
 <div class="card p-3">
     <h4>Total Earnings (PPC)</h4>
