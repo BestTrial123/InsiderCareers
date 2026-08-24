@@ -1,0 +1,12 @@
+@model InsiderCareers.Models.Job
+
+@{
+    ViewData["Title"] = "Job Details";
+}
+
+<h2>@Model.Title</h2>
+<p><strong>Company:</strong> @Model.Employer?.CompanyName</p>
+<p><strong>Location:</strong> @Model.Location</p>
+<p><strong>Type:</strong> @Model.JobType</p>
+<p><strong>Salary:</strong> @Model.Salary</p>
+<p>@Model.Description</p>

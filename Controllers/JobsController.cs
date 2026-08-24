@@ -23,6 +23,19 @@ namespace InsiderCareers.Controllers
             var jobs = await query.OrderByDescending(j => j.PostedDate).ToListAsync();
             return View(jobs);
         }
+// GET /Jobs/Details/5
+public async Task<IActionResult> Details(int id)
+{
+    var job = await _context.Jobs.Include(j => j.Employer)
+        .FirstOrDefaultAsync(j => j.Id == id);
+
+    if (job == null) return NotFound();
+
+    job.ClickCount++;
+    await _context.SaveChangesAsync();
+
+    return View(job);
+}
 
         // GET /Jobs/Post
         [HttpGet]

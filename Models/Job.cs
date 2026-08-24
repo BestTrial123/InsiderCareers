@@ -10,7 +10,7 @@ namespace InsiderCareers.Models
         public string? Salary { get; set; }    // e.g. "$15 per hour"
         public string Status { get; set; } = "Open"; // Open, Paused, Closed
         public DateTime PostedDate { get; set; } = DateTime.UtcNow;
-
+        public int ClickCount { get; set; } = 0;
         public int EmployerId { get; set; }
         public Employer? Employer { get; set; }
 
