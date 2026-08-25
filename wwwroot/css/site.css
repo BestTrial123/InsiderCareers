@@ -304,11 +304,14 @@ html, body {
         }
 
         .jsd-job-main {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.jsd-job-info {
+    order: 1;
+}
         .jsd-job-info h4 {
             margin: 0 0 4px 0;
         }
@@ -320,8 +323,11 @@ html, body {
         }
 
         .jsd-job-right {
-            text-align: right;
-        }
+    flex-basis: 100%;
+    text-align: center;
+    order: 2;
+    margin-top: 12px;
+}
 
         .jsd-apply-btn {
             background: #3b5bff;
