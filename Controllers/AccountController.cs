@@ -93,6 +93,11 @@ public async Task<IActionResult> AdminDashboard()
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
+        [HttpGet]
+public IActionResult RegisterJobseeker()
+{
+    return View();
+}
 [HttpPost]
 public async Task<IActionResult> RegisterJobseeker(JobSeeker model, IFormFile? photo, IFormFile? resume)
 {
