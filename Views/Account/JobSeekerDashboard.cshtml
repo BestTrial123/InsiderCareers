@@ -81,18 +81,18 @@
                         <span>@postedText</span>
                     </div>
                     <div class="jsd-job-main">
-                        <div class="jsd-job-info">
-                            <h4>@job.Title</h4>
-                            <div class="jsd-salary">@job.Salary</div>
-                        </div>
-                        <div class="jsd-job-right">
-                            <form asp-action="Apply" asp-controller="Jobs" method="post">
-                                <input type="hidden" name="jobId" value="@job.Id" />
-                                <button type="submit" class="jsd-apply-btn">Apply</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                        <div class="jsd-job-main">
+        <h4>@job.Title</h4>
+    </div>
+    <div class="jsd-job-right">
+        <div class="jsd-salary">@job.Salary</div>
+        <form asp-action="Apply" asp-controller="Jobs" method="post">
+            <input type="hidden" name="jobId" value="@job.Id" />
+            <button type="submit" class="jsd-apply-btn">Apply</button>
+        </form>
+    </div>
+</div>
+</div>
 
         }
     </div>
