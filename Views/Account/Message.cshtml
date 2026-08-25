@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Messages";
     Layout = null;
+    var userType = Context.Session.GetString("UserType");
 }
 <!DOCTYPE html>
 <html>
@@ -19,121 +20,131 @@
     <!-- Main content -->
     <div class="flex-grow-1 p-4">
         <h2 class="fw-bold mb-4">Messages</h2>
-        <div class="panel p-0" style="overflow: hidden;">
-            <div class="d-flex" style="height: 75vh;">
 
-                <!-- Mail folder rail -->
-                <div class="d-flex flex-column p-3 gap-1" style="width: 180px; border-right: 1px solid rgba(255,255,255,0.1);">
-                    <a asp-controller="Account" asp-action="Compose" class="btn btn-primary mb-3" style="border-radius: 20px;">
-                        <i class="bi bi-pencil-square"></i> Compose
-                    </a>
-                    <a href="?folder=inbox" class="btn btn-dark text-start d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-inbox me-2"></i>Inbox</span>
-                        @if (Model?.Any(m => !m.IsRead) == true)
-                        {
-                            <span class="badge bg-primary rounded-pill">@Model.Count(m => !m.IsRead)</span>
-                        }
-                    </a>
-                    <a href="?folder=starred" class="btn btn-dark text-start"><i class="bi bi-star me-2"></i>Starred</a>
-                    <a href="?folder=snoozed" class="btn btn-dark text-start"><i class="bi bi-alarm me-2"></i>Snoozed</a>
-                    <a href="?folder=sent" class="btn btn-dark text-start"><i class="bi bi-send me-2"></i>Sent</a>
-                    <a href="?folder=draft" class="btn btn-dark text-start"><i class="bi bi-file-earmark me-2"></i>Draft</a>
-                    <a href="?folder=all" class="btn btn-dark text-start"><i class="bi bi-envelope me-2"></i>All Mail</a>
-                    <a href="?folder=spam" class="btn btn-dark text-start"><i class="bi bi-exclamation-triangle me-2"></i>Spam</a>
-                    <div class="flex-fill"></div>
-                    <a href="#" class="btn btn-dark text-start"><i class="bi bi-gear me-2"></i>Settings</a>
-                </div>
+        @if (userType == "JobSeeker")
+        {
+            <div class="panel p-4 text-center text-white-50">
+                Messages — Coming Soon
+            </div>
+        }
+        else
+        {
+            <div class="panel p-0" style="overflow: hidden;">
+                <div class="d-flex" style="height: 75vh;">
 
-                <!-- Message list -->
-                <div class="border-end" style="width: 320px; overflow-y: auto; border-color: rgba(255,255,255,0.1) !important;">
-                    <div class="p-3 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;">
-                        <input type="text" class="form-control mb-2" placeholder="Search mail"
-                               style="border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: white;">
+                    <!-- Mail folder rail -->
+                    <div class="d-flex flex-column p-3 gap-1" style="width: 180px; border-right: 1px solid rgba(255,255,255,0.1);">
+                        <a asp-controller="Account" asp-action="Compose" class="btn btn-primary mb-3" style="border-radius: 20px;">
+                            <i class="bi bi-pencil-square"></i> Compose
+                        </a>
+                        <a href="?folder=inbox" class="btn btn-dark text-start d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-inbox me-2"></i>Inbox</span>
+                            @if (Model?.Any(m => !m.IsRead) == true)
+                            {
+                                <span class="badge bg-primary rounded-pill">@Model.Count(m => !m.IsRead)</span>
+                            }
+                        </a>
+                        <a href="?folder=starred" class="btn btn-dark text-start"><i class="bi bi-star me-2"></i>Starred</a>
+                        <a href="?folder=snoozed" class="btn btn-dark text-start"><i class="bi bi-alarm me-2"></i>Snoozed</a>
+                        <a href="?folder=sent" class="btn btn-dark text-start"><i class="bi bi-send me-2"></i>Sent</a>
+                        <a href="?folder=draft" class="btn btn-dark text-start"><i class="bi bi-file-earmark me-2"></i>Draft</a>
+                        <a href="?folder=all" class="btn btn-dark text-start"><i class="bi bi-envelope me-2"></i>All Mail</a>
+                        <a href="?folder=spam" class="btn btn-dark text-start"><i class="bi bi-exclamation-triangle me-2"></i>Spam</a>
+                        <div class="flex-fill"></div>
+                        <a href="#" class="btn btn-dark text-start"><i class="bi bi-gear me-2"></i>Settings</a>
                     </div>
 
-                    @if (Model?.Any() != true)
-                    {
-                        <div class="p-4 text-center text-white-50">No messages to review!</div>
-                    }
-                    else
-                    {
-                        @foreach (var msg in Model!)
+                    <!-- Message list -->
+                    <div class="border-end" style="width: 320px; overflow-y: auto; border-color: rgba(255,255,255,0.1) !important;">
+                        <div class="p-3 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;">
+                            <input type="text" class="form-control mb-2" placeholder="Search mail"
+                                   style="border-radius: 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);">
+                        </div>
+
+                        @if (Model?.Any() != true)
                         {
-                            <a href="?id=@msg.Id" class="text-decoration-none text-reset">
-                                <div class="p-3 border-bottom d-flex gap-2"
-                                     style="cursor: pointer; border-color: rgba(255,255,255,0.1) !important; @(ViewData["SelectedId"] as int? == msg.Id ? "background: rgba(255,255,255,0.06);" : "")">
-                                    <div class="rounded-circle bg-secondary flex-shrink-0" style="width: 40px; height: 40px;"></div>
-                                    <div class="flex-fill">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <strong>@msg.SenderName</strong>
-                                            @if (!msg.IsRead)
-                                            {
-                                                <span class="rounded-circle bg-primary" style="width: 8px; height: 8px; display: inline-block;"></span>
-                                            }
+                            <div class="p-4 text-center text-white-50">No messages to review!</div>
+                        }
+                        else
+                        {
+                            @foreach (var msg in Model!)
+                            {
+                                <a href="?id=@msg.Id" class="text-decoration-none text-reset">
+                                    <div class="p-3 border-bottom d-flex gap-2"
+                                         style="cursor: pointer; border-color: rgba(255,255,255,0.1) !important;">
+                                        <div class="rounded-circle bg-secondary flex-shrink-0" style="width: 40px; height: 40px;"></div>
+                                        <div class="flex-fill">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <strong>@msg.SenderName</strong>
+                                                @if (!msg.IsRead)
+                                                {
+                                                    <span class="rounded-circle bg-primary" style="width: 8px; height: 8px; display: inline-block;"></span>
+                                                }
+                                            </div>
+                                            <div class="fw-bold small">
+                                                @msg.Subject
+                                                @if (!string.IsNullOrEmpty(msg.AttachmentPath))
+                                                {
+                                                    <i class="bi bi-paperclip text-white-50 small"></i>
+                                                }
+                                            </div>
+                                            <div class="text-white-50 small">@msg.Body.Substring(0, Math.Min(50, msg.Body.Length))...</div>
                                         </div>
-                                        <div class="fw-bold small">
-                                            @msg.Subject
-                                            @if (!string.IsNullOrEmpty(msg.AttachmentPath))
-                                            {
-                                                <i class="bi bi-paperclip text-white-50 small"></i>
-                                            }
+                                    </div>
+                                </a>
+                            }
+                        }
+                    </div>
+
+                    <!-- Message detail -->
+                    <div class="flex-fill p-4">
+                        @{
+                            int? selectedId = ViewData["SelectedId"] as int?;
+                            Message? first = selectedId.HasValue ? Model!.FirstOrDefault(m => m.Id == selectedId) : null;
+                        }
+                        @if (first != null)
+                        {
+                            @if (!string.IsNullOrEmpty(first.AttachmentPath))
+                            {
+                                <div class="p-3 mb-3" style="background: rgba(255,255,255,0.05); border-radius: 12px; max-width: 300px;">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-paperclip fs-4"></i>
+                                        <div class="flex-fill">
+                                            <div class="fw-bold small">@first.AttachmentFileName</div>
+                                            <a href="@first.AttachmentPath" download class="small text-primary">Download</a>
                                         </div>
-                                        <div class="text-white-50 small">@msg.Body.Substring(0, Math.Min(50, msg.Body.Length))...</div>
                                     </div>
                                 </div>
-                            </a>
-                        }
-                    }
-                </div>
-
-                <!-- Message detail -->
-                <div class="flex-fill p-4">
-                    @{
-                        var selectedId = ViewData["SelectedId"] as int?;
-                        var first = selectedId.HasValue ? Model!.FirstOrDefault(m => m.Id == selectedId) : null;
-                    }
-                    @if (first != null)
-                    {
-                        @if (!string.IsNullOrEmpty(first.AttachmentPath))
-                        {
-                            <div class="p-3 mb-3" style="background: rgba(255,255,255,0.05); border-radius: 12px; max-width: 300px;">
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="bi bi-paperclip fs-4"></i>
-                                    <div class="flex-fill">
-                                        <div class="fw-bold small">@first.AttachmentFileName</div>
-                                        <a href="@first.AttachmentPath" download class="small text-primary">Download</a>
-                                    </div>
+                            }
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold mb-0">@first.Subject</h5>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-trash"></i> Delete</button>
+                                    <button class="btn btn-sm btn-outline-warning"><i class="bi bi-star"></i> Important</button>
                                 </div>
                             </div>
+                            <div class="d-flex align-items-center gap-2 mb-4">
+                                <div class="rounded-circle bg-secondary" style="width: 40px; height: 40px;"></div>
+                                <div>
+                                    <div><strong>@first.SenderName</strong> <span class="text-white-50">&lt;@first.SenderEmail&gt;</span></div>
+                                    <div class="text-white-50 small">@first.SentDate.ToString("d MMM yyyy, HH:mm")</div>
+                                </div>
+                            </div>
+                            <p style="white-space: pre-wrap;">@first.Body</p>
+                            <div class="d-flex gap-2 mt-4">
+                                <button class="btn btn-outline-light"><i class="bi bi-reply"></i> Reply</button>
+                                <button class="btn btn-outline-light"><i class="bi bi-forward"></i> Forward</button>
+                            </div>
                         }
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <h5 class="fw-bold mb-0">@first.Subject</h5>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-trash"></i> Delete</button>
-                                <button class="btn btn-sm btn-outline-warning"><i class="bi bi-star"></i> Important</button>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center gap-2 mb-4">
-                            <div class="rounded-circle bg-secondary" style="width: 40px; height: 40px;"></div>
-                            <div>
-                                <div><strong>@first.SenderName</strong> <span class="text-white-50">&lt;@first.SenderEmail&gt;</span></div>
-                                <div class="text-white-50 small">@first.SentDate.ToString("d MMM yyyy, HH:mm")</div>
-                            </div>
-                        </div>
-                        <p style="white-space: pre-wrap;">@first.Body</p>
-                        <div class="d-flex gap-2 mt-4">
-                            <button class="btn btn-outline-light"><i class="bi bi-reply"></i> Reply</button>
-                            <button class="btn btn-outline-light"><i class="bi bi-forward"></i> Forward</button>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="d-flex align-items-center justify-content-center h-100 text-white-50">Select a message to read</div>
-                    }
-                </div>
+                        else
+                        {
+                            <div class="d-flex align-items-center justify-content-center h-100 text-white-50">Select a message to read</div>
+                        }
+                    </div>
 
+                </div>
             </div>
-        </div>
+        }
     </div>
 
 </body>
