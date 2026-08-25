@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 
 namespace InsiderCareers.Models
 {
-    public class AppDbContext : DbContext, IDataProtectionKeyContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -15,7 +14,6 @@ namespace InsiderCareers.Models
         public DbSet<JobApplication> JobApplications => Set<JobApplication>();
         public DbSet<Message> Messages { get; set; }
 
-        public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
     }
 }
 

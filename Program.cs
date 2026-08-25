@@ -32,6 +32,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
+    // Persist Data Protection keys to the database so they survive restarts on Render
+builder.Services.Configure<Microsoft.AspNetCore.DataProtection.KeyManagement.KeyManagementOptions>(options =>
+{
+    options.XmlRepository = new InsiderCareers.Models.DbXmlRepository(connectionString);
+});
+builder.Services.AddDataProtection();
 
 var app = builder.Build();
 
