@@ -65,14 +65,25 @@ public async Task<IActionResult> AdminDashboard()
     var adminId = HttpContext.Session.GetInt32("AdminId");
     var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Id == adminId);
 
-    var totalClicks = await _context.Jobs.SumAsync(j => j.ClickCount);
     decimal ratePerClick = 0.15m;
+
+    var jobs = await _context.Jobs
+        .OrderByDescending(j => j.ClickCount)
+        .Take(6)
+        .ToListAsync();
+
+    var totalClicks = await _context.Jobs.SumAsync(j => j.ClickCount);
+    var totalJobs = await _context.Jobs.CountAsync();
     var totalEarnings = totalClicks * ratePerClick;
 
     ViewBag.AdminName = admin?.FullName;
     ViewBag.AdminEmail = admin?.Email;
     ViewBag.TotalClicks = totalClicks;
+    ViewBag.TotalJobs = totalJobs;
+    ViewBag.RatePerClick = ratePerClick;
     ViewBag.TotalEarnings = totalEarnings;
+    ViewBag.JobLabels = jobs.Select(j => j.Title).ToList();
+    ViewBag.JobClicks = jobs.Select(j => j.ClickCount).ToList();
 
     return View();
 }

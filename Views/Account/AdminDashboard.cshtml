@@ -5,14 +5,59 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h2>Admin Dashboard</h2>
-        <p>Welcome, Administrator.</p>
+        <p class="text-muted mb-0">@ViewBag.AdminName · @ViewBag.AdminEmail</p>
     </div>
     <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">Logout</a>
 </div>
 
-<div class="card p-3">
-    <h4>Total Earnings (PPC)</h4>
-    <p>Total Clicks: @ViewBag.TotalClicks</p>
-    <p>Rate per Click: $0.15</p>
-    <p><strong>Total Earnings: $@ViewBag.TotalEarnings</strong></p>
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card p-3 text-white" style="background:#0f2f4f;">
+            <div class="small">Total Clicks</div>
+            <div class="fs-3 fw-bold">@ViewBag.TotalClicks</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-white" style="background:#14532d;">
+            <div class="small">Total Earnings</div>
+            <div class="fs-3 fw-bold">$@ViewBag.TotalEarnings</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-white" style="background:#374151;">
+            <div class="small">Rate per Click</div>
+            <div class="fs-3 fw-bold">$@ViewBag.RatePerClick</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-white" style="background:#1e3a8a;">
+            <div class="small">Jobs Posted</div>
+            <div class="fs-3 fw-bold">@ViewBag.TotalJobs</div>
+        </div>
+    </div>
 </div>
+
+<div class="card p-3">
+    <h5>Clicks per Job</h5>
+    <canvas id="clicksChart" height="100"></canvas>
+</div>
+
+@section Scripts {
+<script>
+    const ctx = document.getElementById('clicksChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Serialize(ViewBag.JobLabels)),
+            datasets: [{
+                label: 'Clicks',
+                data: @Html.Raw(Json.Serialize(ViewBag.JobClicks)),
+                backgroundColor: '#0f2f4f'
+            }]
+        },
+        options: {
+            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+    });
+</script>
+}
