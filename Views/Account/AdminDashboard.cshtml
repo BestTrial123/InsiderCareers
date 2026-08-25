@@ -2,12 +2,9 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2>Admin Dashboard</h2>
-        <p class="text-muted mb-0">@ViewBag.AdminName · @ViewBag.AdminEmail</p>
-    </div>
-    <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">Logout</a>
+<div class="mb-4">
+    <h2>Admin Dashboard</h2>
+    <p class="mb-0" style="color:#cbd5e1;">@ViewBag.AdminName · @ViewBag.AdminEmail</p>
 </div>
 
 <div class="row g-3 mb-4">
@@ -40,6 +37,9 @@
 <div class="card p-3">
     <h5>Clicks per Job</h5>
     <canvas id="clicksChart" height="100"></canvas>
+</div>
+<div class="mt-4">
+    <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">Logout</a>
 </div>
 
 @section Scripts {
