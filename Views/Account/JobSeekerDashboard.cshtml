@@ -334,26 +334,30 @@
 
         @foreach (var job in Model.JobFeed)
         {
-            var minutesAgo = (int)(DateTime.UtcNow - job.PostedDate).TotalMinutes;
-            <div class="jsd-job-card">
-                <div class="jsd-job-top">
-                    <span>@job.Employer?.CompanyName — @job.Location</span>
-                    <span>Posted @minutesAgo min ago</span>
-                </div>
-                <div class="jsd-job-main">
-                    <div class="jsd-job-info">
-                        <h4>@job.Title</h4>
-                        <p>@job.JobType</p>
+                           var minutesAgo = (int)(DateTime.UtcNow - job.PostedDate).TotalMinutes;
+                var daysAgo = minutesAgo / 1440;
+                var postedText = daysAgo >= 1
+                    ? $"Posted {daysAgo} day{(daysAgo == 1 ? "" : "s")} ago"
+                    : $"Posted {minutesAgo} min ago";
+                <div class="jsd-job-card">
+                    <div class="jsd-job-top">
+                        <span>@job.Employer?.CompanyName - @job.Location</span>
+                        <span>@postedText</span>
                     </div>
-                    <div class="jsd-job-right">
-                        <form asp-action="Apply" asp-controller="Jobs" method="post">
-                            <input type="hidden" name="jobId" value="@job.Id" />
-                            <button type="submit" class="jsd-apply-btn">Apply</button>
-                        </form>
-                        <div class="jsd-salary">@job.Salary</div>
+                    <div class="jsd-job-main">
+                        <div class="jsd-job-info">
+                            <h4>@job.Title</h4>
+                            <div class="jsd-salary">@job.Salary</div>
+                        </div>
+                        <div class="jsd-job-right">
+                            <form asp-action="Apply" asp-controller="Jobs" method="post">
+                                <input type="hidden" name="jobId" value="@job.Id" />
+                                <button type="submit" class="jsd-apply-btn">Apply</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+
         }
     </div>
 
