@@ -22,6 +22,7 @@ public AccountController(AppDbContext context) => _context = context;
 
             if (jobSeeker != null)
             {
+                HttpContext.Session.SetString("UserName", jobSeeker.FirstName + " " + jobSeeker.LastName);
                 HttpContext.Session.SetInt32("JobSeekerId", jobSeeker.Id);
                 HttpContext.Session.SetString("UserType", "JobSeeker");
                 return RedirectToAction("JobSeekerDashboard");
@@ -32,6 +33,7 @@ public AccountController(AppDbContext context) => _context = context;
 
             if (employer != null)
             {
+                HttpContext.Session.SetString("UserName", employer.CompanyName);
                 HttpContext.Session.SetInt32("EmployerId", employer.Id);
                 HttpContext.Session.SetString("UserType", "Employer");
                 return RedirectToAction("EmployerDashboard");
@@ -41,6 +43,7 @@ var admin = await _context.Admins
 
 if (admin != null)
 {
+    HttpContext.Session.SetString("UserName" , admin.FullName);
     HttpContext.Session.SetInt32("AdminId", admin.Id);
     HttpContext.Session.SetString("UserType", "Admin");
     return RedirectToAction("AdminDashboard");

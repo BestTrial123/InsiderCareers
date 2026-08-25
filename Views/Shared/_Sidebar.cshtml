@@ -19,10 +19,13 @@
     </span>
     <i class="bi bi-person-circle text-white-50"></i>
 </div>
-        <div class="rounded-circle bg-secondary mx-auto mb-2" style="width: 64px; height: 64px;"></div>
-        <div class="fw-bold">Employer Account</div>
-        <small class="text-white-50">Admin</small>
-    </div>
+        @{
+    var userType = Context.Session.GetString("UserType");
+    var userName = Context.Session.GetString("UserName") ?? userType;
+}
+
+<div class="fw-bold">@userName</div>
+<small class="text-white-50">@userType</small>
 
     <div class="d-flex justify-content-around text-center mb-4 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
         <div>
@@ -39,12 +42,19 @@
         </div>
     </div>
 
+    @if (userType == "Employer")
+{
     <a asp-controller="Account" asp-action="EmployerDashboard" class="sidebar-link active"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
     <a asp-controller="Account" asp-action="Candidates" class="sidebar-link"><i class="bi bi-people me-2"></i>Candidates</a>
-    <a asp-controller="Account" asp-action="Message" class="sidebar-link"><i class="bi bi-chat-dots me-2"></i>Message</a>
-    <a href="#" class="sidebar-link"><i class="bi bi-calendar3 me-2"></i>Calendar</a>
-    <a href="#" class="sidebar-link"><i class="bi bi-search me-2"></i>Search</a>
-    <a href="#" class="sidebar-link"><i class="bi bi-gear me-2"></i>Setting</a>
-    <a href="#" class="sidebar-link"><i class="bi bi-headset me-2"></i>Contact Support</a>
-    <a asp-controller="Account" asp-action="Logout" class="sidebar-link"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
-</div>\
+}
+else if (userType == "JobSeeker")
+{
+    <a asp-controller="Account" asp-action="JobSeekerDashboard" class="sidebar-link active"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+    <a asp-controller="Jobs" asp-action="Index" class="sidebar-link"><i class="bi bi-search me-2"></i>Find Jobs</a>
+}
+else if (userType == "Admin")
+{
+    <a asp-controller="Account" asp-action="AdminDashboard" class="sidebar-link active"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+}
+
+<a asp-controller="Account" asp-action="Message" class="sidebar-link"><i class="bi bi-chat-dots me-2"></i>Message</a>
