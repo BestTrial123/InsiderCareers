@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace InsiderCareers.Models
 {
     public class JobSeeker
@@ -10,6 +12,7 @@ namespace InsiderCareers.Models
         public required string Email { get; set; }
         public required string Password { get; set; }
         public string? Phone { get; set; }
+        [Column(TypeName = "date")]
         public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
         public string? MaritalStatus { get; set; }
