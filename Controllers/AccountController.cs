@@ -285,7 +285,7 @@ public async Task<IActionResult> JobSeekerProfile()
     return View(jobSeeker);
 }
 [HttpGet]
-public async Task<IActionResult> JobSeekerDashboard()
+public async Task<IActionResult> JobSeekerDashboard(string? q, string? location)
 {
                 var jobSeekerId = HttpContext.Session.GetInt32("JobSeekerId");
             if (jobSeekerId == null)
@@ -316,6 +316,8 @@ public async Task<IActionResult> JobSeekerDashboard()
         JobFeed = await _context.Jobs
             .Include(j => j.Employer)
             .Where(j => j.Status == "Open")
+            .Where(j => string.IsNullOrEmpty(q) || j.Title.Contains(q))
+            .Where(j => string.IsNullOrEmpty(location) || j.Location!.Contains(location))
             .OrderByDescending(j => j.PostedDate)
             .Take(20)
             .ToListAsync()
@@ -325,4 +327,3 @@ public async Task<IActionResult> JobSeekerDashboard()
 }
     }
 }
-
