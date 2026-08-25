@@ -6,7 +6,16 @@ namespace InsiderCareers.Controllers
     public class AccountController : Controller
     {
         private readonly AppDbContext _context;
-public AccountController(AppDbContext context) => _context = context;
+        public AccountController(AppDbContext context) => _context = context;
+        public IActionResult Appointments()
+{
+    return View();
+}
+
+public IActionResult Settings()
+{
+    return View();
+}
 
         [HttpGet]
         public IActionResult Login()
