@@ -34,6 +34,8 @@ public IActionResult Settings()
                 HttpContext.Session.SetString("UserName", jobSeeker.FirstName + " " + jobSeeker.LastName);
                 HttpContext.Session.SetInt32("JobSeekerId", jobSeeker.Id);
                 HttpContext.Session.SetString("UserType", "JobSeeker");
+                HttpContext.Session.SetString("UserEmail", jobSeeker.Email);
+                HttpContext.Session.SetString("UserPhone", jobSeeker.Phone ?? "");
                 return RedirectToAction("JobSeekerDashboard");
             }
 

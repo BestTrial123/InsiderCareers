@@ -22,9 +22,9 @@
 
         <div class="jsd-fullname">@userName</div>
         <div class="jsd-contact">
-            <small class="text-white-50">@userType</small>
-        </div>
-
+    @Context.Session.GetString("UserEmail")<br />
+    @Context.Session.GetString("UserPhone")
+</div>
         <div class="jsd-nav">
             <a asp-controller="Account" asp-action="JobSeekerDashboard" class="active">Profile</a>
             <a asp-controller="Account" asp-action="Message">Message</a>
