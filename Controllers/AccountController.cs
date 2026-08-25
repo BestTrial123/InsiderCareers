@@ -186,6 +186,7 @@ public async Task<IActionResult> EmployerDashboard()
 
     return View(jobs);
 }
+
         [HttpGet]
 public async Task<IActionResult> Candidates()
 {
@@ -250,6 +251,21 @@ public async Task<IActionResult> Compose(string recipientEmail, string subject, 
     await _context.SaveChangesAsync();
 
     return RedirectToAction("Message");
+}
+[HttpGet]
+public async Task<IActionResult> JobSeekerProfile()
+{
+    if (HttpContext.Session.GetString("UserType") != "JobSeeker")
+    {
+        return RedirectToAction("Login");
+    }
+
+    var jobSeekerId = HttpContext.Session.GetInt32("JobSeekerId");
+    var jobSeeker = await _context.JobSeekers.FirstOrDefaultAsync(j => j.Id == jobSeekerId);
+
+    if (jobSeeker == null) return RedirectToAction("Login");
+
+    return View(jobSeeker);
 }
 [HttpGet]
 public async Task<IActionResult> JobSeekerDashboard()
