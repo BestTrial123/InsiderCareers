@@ -286,7 +286,17 @@ html, body {
             background: rgba(255,255,255,0.06);
             color: #fff;
         }
-
+.jsd-job-title {
+    display: inline-block;
+    position: relative;
+    top: -28px;
+    left: 4px;
+    margin: 0 0 -20px 0;
+    padding: 0 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: #14161f; /* adjust to match your page's real base color */
+}
         .jsd-job-card {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.1);
