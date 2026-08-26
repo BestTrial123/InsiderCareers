@@ -1,4 +1,4 @@
-@model List<InsiderCareers.Models.Booking>
+@model List<InsiderCareers.Models.JobApplication>
 @{
     ViewData["Title"] = "Calendar";
     Layout = null;
@@ -63,27 +63,34 @@
 
         <div class="cal-panel">
             <h4>2026-09-09 Tuesday</h4>
-            @foreach (var b in Model)
-            {
-                <div class="cal-booking-row">
-                    <span class="cal-time">@b.Time</span>
-                    <span class="cal-name">@b.Name</span>
-                    <span class="cal-phone">@b.Phone</span>
-                    @if (b.HasSms)
-                    {
-                        <span class="cal-sms">SMS</span>
-                    }
-                    <span class="cal-room">@b.Room</span>
-                    @if (b.Status == "Confirmed")
-                    {
-                        <button class="cal-status-btn cal-confirm">✓ Confirm</button>
-                    }
-                    else
-                    {
-                        <button class="cal-status-btn cal-cancel">✕ Cancel</button>
-                    }
-                </div>
-            }
+            @foreach (var app in Model)
+{
+    <div class="cal-booking-row">
+        <span class="cal-time">@app.InterviewDate?.ToString("h:mm tt")</span>
+        <span class="cal-name">@app.JobSeeker?.FirstName @app.JobSeeker?.LastName</span>
+        <span class="cal-phone">@app.JobSeeker?.Phone</span>
+        <span class="cal-room">@app.InterviewRoom</span>
+        @if (app.InterviewStatus == "Confirmed")
+        {
+            <button class="cal-status-btn cal-confirm">✓ Confirmed</button>
+        }
+        else if (app.InterviewStatus == "Canceled")
+        {
+            <span class="cal-status-btn cal-cancel">Canceled</span>
+        }
+        else
+        {
+            <form asp-action="ConfirmInterview" asp-controller="Account" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="@app.Id" />
+                <button type="submit" class="cal-status-btn cal-confirm">✓ Confirm</button>
+            </form>
+            <form asp-action="CancelInterview" asp-controller="Account" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="@app.Id" />
+                <button type="submit" class="cal-status-btn cal-cancel">✕ Cancel</button>
+            </form>
+        }
+    </div>
+}
         </div>
 
         <div class="cal-panel">
