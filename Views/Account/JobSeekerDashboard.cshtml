@@ -76,20 +76,23 @@
                     ? $"Posted {daysAgo} day{(daysAgo == 1 ? "" : "s")} ago"
                     : $"Posted {minutesAgo} min ago";
                 <div class="jsd-job-card">
-    <h4 class="jsd-job-title">@job.Title</h4>
     <div class="jsd-job-top">
         <span>@job.Employer?.CompanyName - @job.Location</span>
         <span>@postedText</span>
     </div>
-    <div class="jsd-job-right">
-        <div class="jsd-salary">@job.Salary</div>
-        <form asp-action="Apply" asp-controller="Jobs" method="post">
-            <input type="hidden" name="jobId" value="@job.Id" />
-            <button type="submit" class="jsd-apply-btn">Apply</button>
-        </form>
+    <div class="jsd-job-bottom" style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+        <span class="jsd-job-title">@job.Title</span>
+        <div class="jsd-job-right">
+            <div class="jsd-salary">@job.Salary</div>
+            <form asp-action="Apply" asp-controller="Jobs" method="post">
+                <input type="hidden" name="jobId" value="@job.Id" />
+                <button type="submit" class="jsd-apply-btn">Apply</button>
+            </form>
+        </div>
     </div>
 </div>
-     }
+
+        }
     </div>
 
     <div class="jsd-right">
