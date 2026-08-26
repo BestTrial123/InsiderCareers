@@ -294,59 +294,43 @@ html, body {
         .jsd-job-card {
     position: relative;
     background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
     padding: 16px 20px;
-    padding-bottom: 44px;
     margin-bottom: 14px;
 }
 
-        .jsd-job-top {
-            display: flex;
-            justify-content: space-between;
-            color: #9aa0b4;
-            font-size: 0.8rem;
-            margin-bottom: 6px;
-        }
-
-        .jsd-job-main {
+.jsd-job-top {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
+    color: #9aa0b4;
+    font-size: 0.8rem;
+    margin-bottom: 20px;
+}
+
+.jsd-job-bottom {
+    display: flex;
+    justify-content: center;
     align-items: center;
-}
-        .jsd-job-info h4 {
-            margin: 40px 0 4px 0;
-        }
-
-        .jsd-job-info p {
-            color: #9aa0b4;
-            margin: 0;
-            font-size: 0.9rem;
-        }
-
-        .jsd-job-right {
-            position: absolute;
-            bottom: 16px;
-            right: 20px;
-            text-align: right;
+    position: relative;
 }
 
-        .jsd-apply-btn {
-            background: #3b5bff;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 18px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            margin-bottom: 6px;
+.jsd-job-title {
+    position: absolute;
+    left: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
-        .jsd-salary {
-            color: #cfd3e0;
-            font-size: 0.85rem;
-        }
+.jsd-apply-btn {
+    background: #3b5bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 28px;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
 
         .jsd-right {
             padding: 24px 20px;

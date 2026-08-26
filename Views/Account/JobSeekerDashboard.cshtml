@@ -77,12 +77,11 @@
                     : $"Posted {minutesAgo} min ago";
 <div class="jsd-job-card">
     <div class="jsd-job-top">
-        <span>@job.Employer?.CompanyName - @job.Location</span>
+        <span>@job.Employer?.CompanyName</span>
         <span>@postedText</span>
     </div>
-    <div class="jsd-job-title">@job.Title</div>
-
-    <div class="jsd-apply-btn-wrap">
+    <div class="jsd-job-bottom">
+        <span class="jsd-job-title">@job.Title</span>
         <form asp-action="Apply" asp-controller="Jobs" method="post">
             <input type="hidden" name="jobId" value="@job.Id" />
             <button type="submit" class="jsd-apply-btn">Apply</button>
