@@ -80,15 +80,13 @@
         <span>@job.Employer?.CompanyName - @job.Location</span>
         <span>@postedText</span>
     </div>
-    <div class="jsd-job-bottom">
-        <span class="jsd-job-title">@job.Title</span>
-        <div class="jsd-job-right">
-            <div class="jsd-salary">@job.Salary</div>
-            <form asp-action="Apply" asp-controller="Jobs" method="post">
-                <input type="hidden" name="jobId" value="@job.Id" />
-                <button type="submit" class="jsd-apply-btn">Apply</button>
-            </form>
-        </div>
+    <div class="jsd-job-title">@job.Title</div>
+
+    <div class="jsd-apply-btn-wrap">
+        <form asp-action="Apply" asp-controller="Jobs" method="post">
+            <input type="hidden" name="jobId" value="@job.Id" />
+            <button type="submit" class="jsd-apply-btn">Apply</button>
+        </form>
     </div>
 </div>
 

@@ -293,12 +293,7 @@ html, body {
 }
         .jsd-job-card {
     position: relative;   
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 16px 20px;
-    padding-top: 24px; 
-    margin-bottom: 14px;
+    margin-bottom: 44px;
 }
 
         .jsd-job-top {
@@ -333,14 +328,10 @@ html, body {
 }
 
         .jsd-apply-btn {
-            background: #3b5bff;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 18px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            margin-bottom: 6px;
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .jsd-salary {
