@@ -219,16 +219,17 @@ public async Task<IActionResult> Candidates()
     return View(jobs);
 }
 [HttpGet]
-public IActionResult Calendar()
+public async Task<IActionResult> Calendar()
 {
     ViewData["Title"] = "Calendar";
-    var bookings = new List<Booking>
-    {
-        new Booking { Name = "Mr. Chan", Phone = "6692 3636", Time = "9:00 AM", Room = "Room A", HasSms = true, Status = "Confirmed" },
-        new Booking { Name = "Mr. Chan", Phone = "6692 3636", Time = "9:00 AM", Room = "Room A", HasSms = false, Status = "Pending" },
-        new Booking { Name = "Mr. Chan", Phone = "6692 3636", Time = "9:00 AM", Room = "Room 7", HasSms = true, Status = "Confirmed" },
-    };
-    return View(bookings);
+    var employer = await _context.Employers.FirstOrDefaultAsync();
+    var interviews = await _context.JobApplications
+        .Include(a => a.Job)
+        .Include(a => a.JobSeeker)
+        .Where(a => a.Job != null && employer != null && a.Job.EmployerId == employer.Id && a.Status == "Interview")
+        .OrderBy(a => a.InterviewDate)
+        .ToListAsync();
+    return View(interviews);
 }
 [HttpGet]
 public async Task<IActionResult> Message(int? id)
