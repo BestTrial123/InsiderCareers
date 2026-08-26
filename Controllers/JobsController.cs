@@ -58,5 +58,31 @@ public async Task<IActionResult> Details(int id)
 
             return RedirectToAction("EmployerDashboard", "Account");
         }
+    // POST /Jobs/Apply
+[HttpPost]
+public async Task<IActionResult> Apply(int jobId)
+{
+    // TEMP: hardcode JobSeekerId until real login/session is wired
+    var jobSeeker = await _context.JobSeekers.FirstOrDefaultAsync();
+    if (jobSeeker == null) return RedirectToAction("RegisterJobseeker", "Account");
+
+    var alreadyApplied = await _context.JobApplications
+        .AnyAsync(a => a.JobId == jobId && a.JobSeekerId == jobSeeker.Id);
+
+    if (!alreadyApplied)
+    {
+        var application = new JobApplication
+        {
+            JobId = jobId,
+            JobSeekerId = jobSeeker.Id,
+            AppliedDate = DateTime.UtcNow,
+            Status = "Applied"
+        };
+        _context.JobApplications.Add(application);
+        await _context.SaveChangesAsync();
+    }
+
+    return RedirectToAction("JobSeekerDashboard", "Account");
+}
     }
 }
