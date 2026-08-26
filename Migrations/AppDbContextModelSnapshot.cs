@@ -183,6 +183,13 @@ namespace InsiderCareers.Migrations
                     b.Property<DateTime?>("InterviewDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("InterviewRoom")
+                        .HasColumnType("text");
+
+                    b.Property<string>("InterviewStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("JobId")
                         .HasColumnType("integer");
 

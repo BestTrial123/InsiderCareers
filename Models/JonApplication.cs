@@ -15,6 +15,8 @@ namespace InsiderCareers.Models
 
         // Only set when Status == "Interview"
         public DateTime? InterviewDate { get; set; }
+        public string? InterviewRoom { get; set; }
+        public string InterviewStatus { get; set; } = "Pending"; // Pending, Confirmed, Canceled
     }
 }
 
