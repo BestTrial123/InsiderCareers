@@ -219,6 +219,18 @@ public async Task<IActionResult> Candidates()
     return View(jobs);
 }
 [HttpGet]
+public IActionResult Calendar()
+{
+    ViewData["Title"] = "Calendar";
+    var bookings = new List<Booking>
+    {
+        new Booking { Name = "Mr. Chan", Phone = "6692 3636", Time = "9:00 AM", Room = "Room A", HasSms = true, Status = "Confirmed" },
+        new Booking { Name = "Mr. Chan", Phone = "6692 3636", Time = "9:00 AM", Room = "Room A", HasSms = false, Status = "Pending" },
+        new Booking { Name = "Mr. Chan", Phone = "6692 3636", Time = "9:00 AM", Room = "Room 7", HasSms = true, Status = "Confirmed" },
+    };
+    return View(bookings);
+}
+[HttpGet]
 public async Task<IActionResult> Message(int? id)
 {
     var employer = await _context.Employers.FirstOrDefaultAsync();

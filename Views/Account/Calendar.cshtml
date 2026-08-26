@@ -1,0 +1,124 @@
+@model List<InsiderCareers.Models.Booking>
+@{
+    ViewData["Title"] = "Calendar";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Calendar - InsiderCareers</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+</head>
+<body>
+
+<div class="cal-page">
+
+    <div class="cal-panel cal-calendar">
+        <div class="cal-header">
+            <h3>Calendar</h3>
+            <button class="cal-today-btn">Today</button>
+        </div>
+        <div class="cal-month">
+            <h4>November 2026</h4>
+            <div class="cal-grid cal-grid-head">
+                <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+            </div>
+            <div class="cal-grid">
+                @for (int i = 1; i <= 30; i++)
+                {
+                    <span class="cal-day @(i == 17 ? "cal-day-active" : "")">@i</span>
+                }
+            </div>
+        </div>
+        <div class="cal-month">
+            <h4>December 2026</h4>
+            <div class="cal-grid cal-grid-head">
+                <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+            </div>
+            <div class="cal-grid">
+                @for (int i = 1; i <= 30; i++)
+                {
+                    <span class="cal-day">@i</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="cal-right-col">
+        <div class="cal-panel">
+            <div class="cal-search-header">
+                <h4>SEARCH</h4>
+                <div class="cal-filters">
+                    <label><input type="checkbox" checked /> Confirmed</label>
+                    <label><input type="checkbox" checked /> Pending</label>
+                    <label><input type="checkbox" checked /> Canceled</label>
+                </div>
+            </div>
+            <input type="text" class="cal-search-input" placeholder="Name or Phone" />
+        </div>
+
+        <div class="cal-panel">
+            <h4>2026-09-09 Tuesday</h4>
+            @foreach (var b in Model)
+            {
+                <div class="cal-booking-row">
+                    <span class="cal-time">@b.Time</span>
+                    <span class="cal-name">@b.Name</span>
+                    <span class="cal-phone">@b.Phone</span>
+                    @if (b.HasSms)
+                    {
+                        <span class="cal-sms">SMS</span>
+                    }
+                    <span class="cal-room">@b.Room</span>
+                    @if (b.Status == "Confirmed")
+                    {
+                        <button class="cal-status-btn cal-confirm">✓ Confirm</button>
+                    }
+                    else
+                    {
+                        <button class="cal-status-btn cal-cancel">✕ Cancel</button>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="cal-panel">
+            <h4>ADD BOOKING</h4>
+            <form class="cal-add-form">
+                <div class="cal-form-row">
+                    <div>
+                        <label>Name</label>
+                        <input type="text" placeholder="John Doe" />
+                    </div>
+                    <div>
+                        <label>Phone</label>
+                        <input type="text" placeholder="656 3456 44" />
+                    </div>
+                </div>
+                <div class="cal-form-row">
+                    <div>
+                        <label>Date</label>
+                        <input type="text" placeholder="09/09/2026" />
+                    </div>
+                    <div>
+                        <label>Booking time</label>
+                        <input type="text" placeholder="11:00" style="width:60px;" />
+                        <select>
+                            <option>AM</option>
+                            <option>PM</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="cal-add-btn">Add New Booking</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

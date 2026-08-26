@@ -418,3 +418,174 @@ html, body {
             color: #9aa0b4;
             font-size: 0.75rem;
         }
+        .cal-page {
+    display: flex;
+    gap: 20px;
+    padding: 24px 28px;
+    background: #14161f;
+    color: #fff;
+    font-family: inherit;
+    min-height: 100vh;
+}
+
+.cal-panel {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+}
+
+.cal-calendar {
+    flex: 1.1;
+    max-width: 420px;
+    height: fit-content;
+}
+
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cal-today-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 14px;
+    cursor: pointer;
+}
+
+.cal-month h4 {
+    margin: 16px 0 10px 0;
+    font-weight: 600;
+}
+
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    text-align: center;
+}
+
+.cal-grid-head span {
+    color: #9aa0b4;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.cal-day {
+    padding: 8px 0;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.cal-day-active {
+    background: #ff6a3d;
+    font-weight: 700;
+}
+
+.cal-right-col {
+    flex: 1.3;
+}
+
+.cal-search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cal-filters label {
+    font-size: 0.8rem;
+    color: #cfd3e0;
+    margin-left: 12px;
+}
+
+.cal-search-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+}
+
+.cal-booking-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.85rem;
+}
+
+.cal-booking-row:last-child {
+    border-bottom: none;
+}
+
+.cal-sms {
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+}
+
+.cal-status-btn {
+    margin-left: auto;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.cal-confirm {
+    color: #4ade80;
+    border-color: #4ade80;
+}
+
+.cal-cancel {
+    color: #f87171;
+    border-color: #f87171;
+}
+
+.cal-form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.cal-form-row > div {
+    flex: 1;
+}
+
+.cal-form-row label {
+    display: block;
+    font-size: 0.75rem;
+    color: #9aa0b4;
+    margin-bottom: 4px;
+}
+
+.cal-form-row input, .cal-form-row select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+}
+
+.cal-add-btn {
+    background: #3b5bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+}
