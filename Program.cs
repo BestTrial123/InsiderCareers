@@ -25,6 +25,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
 });
 
+
 // Configure PostgreSQL DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")

@@ -1,21 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using InsiderCareers.Models;
 using Microsoft.EntityFrameworkCore;
+using InsiderCareers.Services;
 namespace InsiderCareers.Controllers
 {
     public class AccountController : Controller
     {
         private readonly AppDbContext _context;
-        public AccountController(AppDbContext context) => _context = context;
-        public IActionResult Appointments()
-{
-    return View();
-}
+        private readonly EmailService _emailService;
 
-public IActionResult Settings()
-{
-    return View();
-}
+        public AccountController(AppDbContext context, EmailService emailService)
+        {
+            _context = context;
+            _emailService = emailService;
+        }
+
+        public IActionResult Appointments()
+        {
+            return View();
+        }
+
+        public IActionResult Settings()
+        {
+            return View();
+        }
 
         [HttpGet]
         public IActionResult Login()
@@ -134,6 +142,14 @@ public async Task<IActionResult> ToggleVerification(int id)
         var verification = _context.Entry(employer).Property<bool>("IsVerified");
         verification.CurrentValue = !verification.CurrentValue;
         await _context.SaveChangesAsync();
+        if (verification.CurrentValue)
+        {
+            await _emailService.SendEmailAsync(
+                employer.Email,
+                "You're verified on Insider Careers",
+                $"<p>Hi {employer.ContactName}, your employer account for {employer.CompanyName} has been verified. You can now post jobs and message candidates.</p>"
+            );
+        }
     }
     return RedirectToAction("VerifyEmployers");
 }
