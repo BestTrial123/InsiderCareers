@@ -254,6 +254,7 @@ public async Task<IActionResult> EmployerDashboard()
         .ToListAsync();
 
     ViewData["ApplicantCount"] = jobs.Sum(j => j.Applications.Count);
+            ViewData["EmployerVerified"] = employer?.InterviewStatus ?? false;
 
     return View(jobs);
 }
