@@ -35,41 +35,98 @@
         </div>
     </div>
 </div>
+
 <div class="card p-3 mb-4">
     <div class="d-flex justify-content-between align-items-center">
         <div>
             <h5 class="mb-1">Employer Verification</h5>
-            <p class="mb-0 text-white-50 small">Review and approve pending employer accounts</p>
+            <p class="mb-0 text-muted small">@ViewBag.PendingEmployers pending employer(s) awaiting review</p>
         </div>
         <a asp-controller="Account" asp-action="VerifyEmployers" class="btn btn-outline-primary">
             Verify Employers
         </a>
     </div>
 </div>
-<div class="card p-3">
-    <h5>Clicks per Job</h5>
-    <canvas id="clicksChart" height="100"></canvas>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-7">
+        <div class="card p-3 h-100">
+            <h5>Clicks per Job</h5>
+            <canvas id="clicksChart" height="100"></canvas>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card p-3 h-100">
+            <h5>Recent Activity</h5>
+            <ul class="list-unstyled mb-0">
+                @foreach (var job in ViewBag.RecentJobs)
+                {
+                    <li class="d-flex justify-content-between border-bottom py-2">
+                        <span>
+                            <strong>@job.Title</strong>
+                            <br />
+                            <small class="text-muted">@job.Employer?.CompanyName</small>
+                        </span>
+                        <span class="text-muted small align-self-center">New Job</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
 </div>
+
+<div class="card p-3 mb-4">
+    <h5>Recent Employer Signups</h5>
+    <table class="table align-middle mb-0">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Business Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in ViewBag.RecentEmployers)
+            {
+                <tr>
+                    <td>@emp.CompanyName</td>
+                    <td>@emp.ContactName</td>
+                    <td>@emp.BusinessType</td>
+                    <td>
+                        @if (emp.IsVerified)
+                        {
+                            <span class="badge" style="background:#14532d;">Verified</span>
+                        }
+                        else
+                        {
+                            <span class="badge" style="background:#6b7280;">Pending</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 <div class="mt-4">
     <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">Logout</a>
 </div>
 
 @section Scripts {
-<script>
-    const ctx = document.getElementById('clicksChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: @Html.Raw(Json.Serialize(ViewBag.JobLabels)),
-            datasets: [{
-                label: 'Clicks',
-                data: @Html.Raw(Json.Serialize(ViewBag.JobClicks)),
-                backgroundColor: '#0f2f4f'
-            }]
-        },
-        options: {
-            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-        }
-    });
-</script>
+    <script>
+        const ctx = document.getElementById('clicksChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.JobLabels)),
+                datasets: [{
+                    label: 'Clicks',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.JobClicks)),
+                    backgroundColor: '#1e3a8a'
+                }]
+            }
+        });
+    </script>
 }
+    
