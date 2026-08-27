@@ -1,0 +1,36 @@
+@model List<InsiderCareers.Models.JobSeeker>
+@{ ViewData["Title"] = "Manage Job Seekers"; }
+
+<div class="ps-0 pt-3">
+    <h2>Manage Job Seekers</h2>
+</div>
+
+<div class="card p-3 mt-4">
+    <table class="table align-middle mb-0">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var js in Model)
+            {
+                <tr>
+                    <td>@js.FirstName @js.LastName</td>
+                    <td>@js.Email</td>
+                    <td>@js.Phone</td>
+                    <td>
+                        <a asp-action="EditJobSeeker" asp-route-id="@js.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <form asp-action="DeleteJobSeeker" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@js.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,47 @@
+@model List<InsiderCareers.Models.Employer>
+@{ ViewData["Title"] = "Manage Employers"; }
+
+<div class="ps-0 pt-3">
+    <h2>Manage Employers</h2>
+</div>
+
+<div class="card p-3 mt-4">
+    <table class="table align-middle mb-0">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model)
+            {
+                <tr>
+                    <td>@emp.CompanyName</td>
+                    <td>@emp.ContactName</td>
+                    <td>@emp.Email</td>
+                    <td>
+                        @if (emp.InterviewStatus)
+                        {
+                            <span class="badge" style="background:#14532d;">Verified</span>
+                        }
+                        else
+                        {
+                            <span class="badge" style="background:#374151;">Pending</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="EditEmployer" asp-route-id="@emp.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <form asp-action="DeleteEmployer" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@emp.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
