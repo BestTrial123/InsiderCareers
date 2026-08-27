@@ -21,5 +21,6 @@ public string? TaxId { get; set; }              // EIN or VAT number
 public string? ContactPosition { get; set; }    // person's job title
 public string? VerificationDocumentPath { get; set; } // uploaded license/certificate
 public string? LogoPath { get; set; }
+public bool InterviewStatus { get; set;} = false;
     }
 }

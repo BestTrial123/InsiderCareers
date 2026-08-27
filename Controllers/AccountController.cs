@@ -101,8 +101,29 @@ public async Task<IActionResult> AdminDashboard()
 
     return View();
 }
-   [HttpGet]
-        public IActionResult Logout()
+
+[HttpGet]
+public async Task<IActionResult> VerifyEmployers()
+{
+    var employers = await _context.Employers.ToListAsync();
+    return View(employers);
+}
+
+[HttpPost]
+public async Task<IActionResult> ToggleVerification(int id)
+{
+    var employer = await _context.Employers.FindAsync(id);
+    if (employer != null)
+    {
+        var verification = _context.Entry(employer).Property<bool>("IsVerified");
+        verification.CurrentValue = !verification.CurrentValue;
+        await _context.SaveChangesAsync();
+    }
+    return RedirectToAction("VerifyEmployers");
+}
+
+[HttpGet]
+public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
