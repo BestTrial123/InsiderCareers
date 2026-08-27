@@ -59,7 +59,7 @@
         <div class="card p-3 h-100">
             <h5>Recent Activity</h5>
             <ul class="list-unstyled mb-0">
-                @foreach (var job in ViewBag.RecentJobs)
+                @foreach (dynamic job in ViewBag.RecentJobs)
                 {
                     <li class="d-flex justify-content-between border-bottom py-2">
                         <span>
@@ -87,7 +87,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var emp in ViewBag.RecentEmployers)
+            @foreach (dynamic emp in ViewBag.RecentEmployers)
             {
                 <tr>
                     <td>@emp.CompanyName</td>
