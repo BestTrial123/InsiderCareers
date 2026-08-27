@@ -32,14 +32,14 @@
                     <td>@emp.Email</td>
                     <td>@emp.BusinessType</td>
                     <td>
-                        @if (isVerified)
-                        {
-                            <span class="badge" style="background:#14532d;">Verified</span>
-                        }
-                        else
-                        {
-                            <span class="badge" style="background:#374151;">Pending</span>
-                        }
+                        @if (emp.InterviewStatus)
+{
+    <span class="badge" style="background:#14532d;">Verified</span>
+}
+else
+{
+    <span class="badge" style="background:#374151;">Pending</span>
+}
                     </td>
                     <td>
                         <form asp-action="ToggleVerification" method="post" class="d-inline">

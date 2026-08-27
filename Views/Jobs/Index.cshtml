@@ -14,7 +14,14 @@
             <div class="mb-3 p-3 border rounded">
                 <h5><a asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="text-decoration-none">@job.Title</a></h5>
                 <p>@job.Employer?.CompanyName · @job.Location · @job.JobType</p>
-                <p>@job.Description</p>
+                <p>
+    @job.Employer?.CompanyName
+    @if (job.Employer?.InterviewStatus == true)
+    {
+        <span class="badge" style="background:#1e3a8a;">✔ Verified</span>
+    }
+    · @job.Location · @job.JobType
+</p>
             </div>
         }
     }

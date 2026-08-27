@@ -99,7 +99,7 @@ public async Task<IActionResult> AdminDashboard()
     ViewBag.JobClicks = jobs.Select(j => j.ClickCount).ToList();
 
 var pendingEmployers = await _context.Employers
-    .CountAsync(e => !EF.Property<bool>(e, "IsVerified"));
+    .CountAsync(e => !e.InterviewStatus);
 ViewBag.PendingEmployers = pendingEmployers;
 
 var recentJobs = await _context.Jobs
