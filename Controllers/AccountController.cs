@@ -55,6 +55,8 @@ namespace InsiderCareers.Controllers
                 HttpContext.Session.SetString("UserName", employer.CompanyName);
                 HttpContext.Session.SetInt32("EmployerId", employer.Id);
                 HttpContext.Session.SetString("UserType", "Employer");
+                HttpContext.Session.SetString("UserContactName", employer.ContactName);
+                HttpContext.Session.SetString("UserEmail", employer.Email);
                 return RedirectToAction("EmployerDashboard");
             }
 var admin = await _context.Admins
