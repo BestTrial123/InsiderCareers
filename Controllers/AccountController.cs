@@ -96,10 +96,26 @@ public async Task<IActionResult> AdminDashboard()
     ViewBag.TotalJobs = totalJobs;
     ViewBag.RatePerClick = ratePerClick;
     ViewBag.TotalEarnings = totalEarnings;
-    ViewBag.JobLabels = jobs.Select(j => j.Title).ToList();
     ViewBag.JobClicks = jobs.Select(j => j.ClickCount).ToList();
 
-    return View();
+var pendingEmployers = await _context.Employers
+    .CountAsync(e => !EF.Property<bool>(e, "IsVerified"));
+ViewBag.PendingEmployers = pendingEmployers;
+
+var recentJobs = await _context.Jobs
+    .Include(j => j.Employer)
+    .OrderByDescending(j => j.Id)
+    .Take(5)
+    .ToListAsync();
+ViewBag.RecentJobs = recentJobs;
+
+var recentEmployers = await _context.Employers
+    .OrderByDescending(e => e.Id)
+    .Take(5)
+    .ToListAsync();
+ViewBag.RecentEmployers = recentEmployers;
+
+return View();
 }
 
 [HttpGet]
