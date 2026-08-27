@@ -1,0 +1,82 @@
+@model InsiderCareers.Models.Employer
+@{ ViewData["Title"] = "Edit Employer"; }
+
+<div class="ps-0 pt-3">
+    <h2>Edit Employer</h2>
+</div>
+
+<div class="card p-3 mt-4">
+    <form asp-action="EditEmployer" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label class="form-label">Company Name</label>
+            <input asp-for="CompanyName" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Contact Name</label>
+            <input asp-for="ContactName" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Street Address</label>
+            <input asp-for="StreetAddress" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">City</label>
+                <input asp-for="City" class="form-control" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">State</label>
+                <input asp-for="State" class="form-control" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Zip</label>
+                <input asp-for="Zip" class="form-control" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Business Type</label>
+            <input asp-for="BusinessType" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Employee Count</label>
+            <input asp-for="EmployeeCount" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Website URL</label>
+            <input asp-for="WebsiteUrl" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Operating Region</label>
+            <input asp-for="OperatingRegion" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Direct Phone</label>
+            <input asp-for="DirectPhone" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tax ID</label>
+            <input asp-for="TaxId" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Contact Position</label>
+            <input asp-for="ContactPosition" class="form-control" />
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="InterviewStatus" class="form-check-input" />
+            <label class="form-check-label">Verified</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="ManageEmployers" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
