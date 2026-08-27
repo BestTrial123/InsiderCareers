@@ -22,6 +22,14 @@
     <div class="flex-grow-1 p-4">
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
             <h2 class="fw-bold mb-0">Employer Dashboard</h2>
+        @if ((bool)(ViewData["EmployerVerified"] ?? false))
+        {
+            <span class="badge bg-success"><i class="bi bi-patch-check-fill me-1"></i>Verified</span>
+        }
+        else
+        {
+            <span class="badge bg-secondary">Pending Verification</span>
+        }
 
             <div class="position-relative" style="width: 280px;">
                 <div class="position-relative">
