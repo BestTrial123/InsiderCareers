@@ -1,0 +1,78 @@
+@model InsiderCareers.Models.JobSeeker
+@{ ViewData["Title"] = "Edit Job Seeker"; }
+
+<div class="ps-0 pt-3">
+    <h2>Edit Job Seeker</h2>
+</div>
+
+<div class="card p-3 mt-4">
+    <form asp-action="EditJobSeeker" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">First Name</label>
+                <input asp-for="FirstName" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Last Name</label>
+                <input asp-for="LastName" class="form-control" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date of Birth</label>
+            <input asp-for="DateOfBirth" type="date" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Gender</label>
+                <input asp-for="Gender" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Marital Status</label>
+                <input asp-for="MaritalStatus" class="form-control" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Language Spoken</label>
+            <input asp-for="LanguageSpoken" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Skills</label>
+            <input asp-for="Skills" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Work History</label>
+            <textarea asp-for="WorkHistory" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Salary Desired</label>
+            <input asp-for="SalaryDesire" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">City</label>
+                <input asp-for="City" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Country</label>
+                <input asp-for="Country" class="form-control" />
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="ManageJobSeekers" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

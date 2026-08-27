@@ -377,5 +377,112 @@ public async Task<IActionResult> JobSeekerDashboard(string? q, string? location)
 
     return View(viewModel);
 }
+// ---------- EMPLOYERS ----------
+[HttpGet]
+public async Task<IActionResult> ManageEmployers()
+{
+    var employers = await _context.Employers.ToListAsync();
+    return View(employers);
+}
+
+[HttpGet]
+public async Task<IActionResult> EditEmployer(int id)
+{
+    var employer = await _context.Employers.FindAsync(id);
+    if (employer == null) return NotFound();
+    return View(employer);
+}
+
+[HttpPost]
+public async Task<IActionResult> EditEmployer(Employer model)
+{
+    var employer = await _context.Employers.FindAsync(model.Id);
+    if (employer == null) return NotFound();
+
+    employer.CompanyName = model.CompanyName;
+    employer.ContactName = model.ContactName;
+    employer.Email = model.Email;
+    employer.Phone = model.Phone;
+    employer.StreetAddress = model.StreetAddress;
+    employer.City = model.City;
+    employer.State = model.State;
+    employer.Zip = model.Zip;
+    employer.BusinessType = model.BusinessType;
+    employer.EmployeeCount = model.EmployeeCount;
+    employer.WebsiteUrl = model.WebsiteUrl;
+    employer.OperatingRegion = model.OperatingRegion;
+    employer.DirectPhone = model.DirectPhone;
+    employer.TaxId = model.TaxId;
+    employer.ContactPosition = model.ContactPosition;
+    employer.InterviewStatus = model.InterviewStatus;
+
+    await _context.SaveChangesAsync();
+    return RedirectToAction("ManageEmployers");
+}
+
+[HttpPost]
+public async Task<IActionResult> DeleteEmployer(int id)
+{
+    var employer = await _context.Employers.FindAsync(id);
+    if (employer != null)
+    {
+        _context.Employers.Remove(employer);
+        await _context.SaveChangesAsync();
+    }
+    return RedirectToAction("ManageEmployers");
+}
+
+// ---------- JOB SEEKERS ----------
+[HttpGet]
+public async Task<IActionResult> ManageJobSeekers()
+{
+    var jobSeekers = await _context.JobSeekers.ToListAsync();
+    return View(jobSeekers);
+}
+
+[HttpGet]
+public async Task<IActionResult> EditJobSeeker(int id)
+{
+    var jobSeeker = await _context.JobSeekers.FindAsync(id);
+    if (jobSeeker == null) return NotFound();
+    return View(jobSeeker);
+}
+
+[HttpPost]
+public async Task<IActionResult> EditJobSeeker(JobSeeker model)
+{
+    var jobSeeker = await _context.JobSeekers.FindAsync(model.Id);
+    if (jobSeeker == null) return NotFound();
+
+    jobSeeker.FirstName = model.FirstName;
+    jobSeeker.LastName = model.LastName;
+    jobSeeker.Email = model.Email;
+    jobSeeker.Phone = model.Phone;
+    jobSeeker.DateOfBirth = model.DateOfBirth;
+    jobSeeker.Gender = model.Gender;
+    jobSeeker.MaritalStatus = model.MaritalStatus;
+    jobSeeker.LanguageSpoken = model.LanguageSpoken;
+    jobSeeker.Skills = model.Skills;
+    jobSeeker.WorkHistory = model.WorkHistory;
+    jobSeeker.SalaryDesire = model.SalaryDesire;
+    jobSeeker.Address = model.Address;
+    jobSeeker.Country = model.Country;
+    jobSeeker.City = model.City;
+
+    await _context.SaveChangesAsync();
+    return RedirectToAction("ManageJobSeekers");
+}
+
+[HttpPost]
+public async Task<IActionResult> DeleteJobSeeker(int id)
+{
+    var jobSeeker = await _context.JobSeekers.FindAsync(id);
+    if (jobSeeker != null)
+    {
+        _context.JobSeekers.Remove(jobSeeker);
+        await _context.SaveChangesAsync();
+    }
+    return RedirectToAction("ManageJobSeekers");
+}
     }
 }
