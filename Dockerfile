@@ -8,5 +8,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 COPY --from=build /app .
 ENV ASPNETCORE_URLS=http://+:10000
+ENV DOTNET_hostBuilder__reloadConfigOnChange=false
 EXPOSE 10000
 ENTRYPOINT ["dotnet", "InsiderCareers.dll"]
