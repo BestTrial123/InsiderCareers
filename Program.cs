@@ -40,6 +40,8 @@ builder.Services.Configure<Microsoft.AspNetCore.DataProtection.KeyManagement.Key
 });
 builder.Services.AddDataProtection();
 
+builder.Services.AddSingleton<InsiderCareers.Services.EmailService>();
+
 var app = builder.Build();
 
 // Automatically run EF Core migrations on startup on Render
