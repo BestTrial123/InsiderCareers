@@ -119,10 +119,10 @@
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.JobLabels)),
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize((object)ViewBag.JobLabels)),
                 datasets: [{
                     label: 'Clicks',
-                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.JobClicks)),
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize((object)ViewBag.JobClicks)),
                     backgroundColor: '#1e3a8a'
                 }]
             }
