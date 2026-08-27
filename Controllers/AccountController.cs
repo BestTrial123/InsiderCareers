@@ -289,9 +289,17 @@ public async Task<IActionResult> Calendar()
 [HttpGet]
 public async Task<IActionResult> Message(int? id)
 {
-    var employer = await _context.Employers.FirstOrDefaultAsync();
+    var userType = HttpContext.Session.GetString("UserType");
+    int? currentId = userType == "Employer"
+        ? HttpContext.Session.GetInt32("EmployerId")
+        : HttpContext.Session.GetInt32("JobSeekerId");
+
+    if (userType == null || currentId == null)
+        return RedirectToAction("Login");
+
     var messages = await _context.Messages
-        .Where(m => employer != null && m.EmployerId == employer.Id)
+        .Where(m => (m.RecipientType == userType && m.RecipientId == currentId)
+                 || (m.SenderType == userType && m.SenderId == currentId))
         .OrderByDescending(m => m.SentDate)
         .ToListAsync();
 
@@ -305,20 +313,39 @@ public IActionResult Compose()
 }
 
 [HttpPost]
-public async Task<IActionResult> Compose(string recipientEmail, string subject, string body, IFormFile? attachment)
+public async Task<IActionResult> Compose(int recipientId, string recipientType, string subject, string body, IFormFile? attachment)
 {
-    var employer = await _context.Employers.FirstOrDefaultAsync();
+    var userType = HttpContext.Session.GetString("UserType");
+    int? currentId = userType == "Employer"
+        ? HttpContext.Session.GetInt32("EmployerId")
+        : HttpContext.Session.GetInt32("JobSeekerId");
+
+    if (userType == null || currentId == null)
+        return RedirectToAction("Login");
+
+    string senderName = "Insider Careers";
+    if (userType == "Employer")
+    {
+        var employer = await _context.Employers.FirstOrDefaultAsync(e => e.Id == currentId);
+        senderName = employer?.CompanyName ?? senderName;
+    }
+    else
+    {
+        var jobSeeker = await _context.JobSeekers.FirstOrDefaultAsync(j => j.Id == currentId);
+        senderName = jobSeeker != null ? $"{jobSeeker.FirstName} {jobSeeker.LastName}" : senderName;
+    }
 
     var message = new Message
     {
-        EmployerId = employer?.Id ?? 0,
-        SenderName = employer?.CompanyName ?? "Insider Careers",
-        SenderEmail = employer?.Email ?? "noreply@insidercareers.com",
-        RecipientEmail = recipientEmail,
+        SenderType = userType,
+        SenderId = currentId.Value,
+        SenderName = senderName,
+        RecipientType = recipientType,
+        RecipientId = recipientId,
         Subject = subject,
         Body = body,
         SentDate = DateTime.Now,
-        IsRead = true
+        IsRead = false
     };
 
     if (attachment != null && attachment.Length > 0)
