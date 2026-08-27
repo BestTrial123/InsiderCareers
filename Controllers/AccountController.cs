@@ -139,10 +139,9 @@ public async Task<IActionResult> ToggleVerification(int id)
     var employer = await _context.Employers.FindAsync(id);
     if (employer != null)
     {
-        var verification = _context.Entry(employer).Property<bool>("IsVerified");
-        verification.CurrentValue = !verification.CurrentValue;
-        await _context.SaveChangesAsync();
-        if (verification.CurrentValue)
+            employer.InterviewStatus = !employer.InterviewStatus;
+            await _context.SaveChangesAsync();
+        if (employer.InterviewStatus)
         {
             await _emailService.SendEmailAsync(
                 employer.Email,
