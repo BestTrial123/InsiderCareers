@@ -125,7 +125,10 @@
                                 </div>
                                 <p style="white-space: pre-wrap;">@first.Body</p>
                                 <div class="d-flex gap-2 mt-4">
-                                    <button class="btn btn-outline-light"><i class="bi bi-reply"></i> Reply</button>
+                                    <a asp-controller="Account" asp-action="Compose"
+                                       asp-route-recipientId="@first.SenderId"
+                                       asp-route-recipientType="@first.SenderType"
+                                       class="btn btn-outline-light"><i class="bi bi-reply"></i> Reply</a>
                                     <button class="btn btn-outline-light"><i class="bi bi-forward"></i> Forward</button>
                                 </div>
                             }
