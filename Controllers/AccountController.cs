@@ -266,10 +266,11 @@ public async Task<IActionResult> Candidates()
 {
     var employer = await _context.Employers.FirstOrDefaultAsync();
     var jobs = await _context.Jobs
-        .Where(j => employer != null && j.EmployerId == employer.Id)
-        .Include(j => j.Applications)
-        .OrderByDescending(j => j.PostedDate)
-        .ToListAsync();
+    .Where(j => employer != null && j.EmployerId == employer.Id)
+    .Include(j => j.Applications)
+        .ThenInclude(a => a.JobSeeker)
+    .OrderByDescending(j => j.PostedDate)
+    .ToListAsync();
 
     return View(jobs);
 }
