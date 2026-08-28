@@ -307,11 +307,48 @@ public async Task<IActionResult> Message(int? id)
     return View(messages);
 }
 [HttpGet]
-public IActionResult Compose()
+public async Task<IActionResult> Compose(int? recipientId, string? recipientType)
 {
+    var userType = HttpContext.Session.GetString("UserType");
+    int? currentId = userType == "Employer"
+        ? HttpContext.Session.GetInt32("EmployerId")
+        : HttpContext.Session.GetInt32("JobSeekerId");
+
+    if (userType == null || currentId == null)
+        return RedirectToAction("Login");
+
+    string recipientName = "";
+    string recipientEmail = "";
+
+    if (recipientId.HasValue && recipientType != null)
+    {
+        if (recipientType == "Employer")
+        {
+            var employer = await _context.Employers.FindAsync(recipientId.Value);
+            if (employer != null)
+            {
+                recipientName = employer.ContactName;
+                recipientEmail = employer.Email;
+            }
+        }
+        else if (recipientType == "JobSeeker")
+        {
+            var jobSeeker = await _context.JobSeekers.FindAsync(recipientId.Value);
+            if (jobSeeker != null)
+            {
+                recipientName = $"{jobSeeker.FirstName} {jobSeeker.LastName}";
+                recipientEmail = jobSeeker.Email;
+            }
+        }
+    }
+
+    ViewData["RecipientId"] = recipientId;
+    ViewData["RecipientType"] = recipientType;
+    ViewData["RecipientName"] = recipientName;
+    ViewData["RecipientEmail"] = recipientEmail;
+
     return View();
 }
-
 [HttpPost]
 public async Task<IActionResult> Compose(int recipientId, string recipientType, string subject, string body, IFormFile? attachment)
 {
@@ -323,16 +360,36 @@ public async Task<IActionResult> Compose(int recipientId, string recipientType, 
     if (userType == null || currentId == null)
         return RedirectToAction("Login");
 
-    string senderName = "Insider Careers";
+    string senderName = "";
+
     if (userType == "Employer")
     {
-        var employer = await _context.Employers.FirstOrDefaultAsync(e => e.Id == currentId);
-        senderName = employer?.CompanyName ?? senderName;
+        var employer = await _context.Employers.FindAsync(currentId.Value);
+        senderName = employer?.ContactName ?? "";
     }
-    else
+    else if (userType == "JobSeeker")
     {
-        var jobSeeker = await _context.JobSeekers.FirstOrDefaultAsync(j => j.Id == currentId);
-        senderName = jobSeeker != null ? $"{jobSeeker.FirstName} {jobSeeker.LastName}" : senderName;
+        var jobSeeker = await _context.JobSeekers.FindAsync(currentId.Value);
+        senderName = jobSeeker != null ? $"{jobSeeker.FirstName} {jobSeeker.LastName}" : "";
+    }
+
+    string? attachmentPath = null;
+    string? attachmentFileName = null;
+
+    if (attachment != null && attachment.Length > 0)
+    {
+        var uploadsFolder = Path.Combine("wwwroot", "uploads", "messages");
+        Directory.CreateDirectory(uploadsFolder);
+        var fileName = $"{Guid.NewGuid()}_{attachment.FileName}";
+        var filePath = Path.Combine(uploadsFolder, fileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await attachment.CopyToAsync(stream);
+        }
+
+        attachmentPath = $"/uploads/messages/{fileName}";
+        attachmentFileName = attachment.FileName;
     }
 
     var message = new Message
@@ -345,21 +402,10 @@ public async Task<IActionResult> Compose(int recipientId, string recipientType, 
         Subject = subject,
         Body = body,
         SentDate = DateTime.Now,
-        IsRead = false
+        IsRead = false,
+        AttachmentPath = attachmentPath,
+        AttachmentFileName = attachmentFileName
     };
-
-    if (attachment != null && attachment.Length > 0)
-    {
-        var fileName = Guid.NewGuid() + Path.GetExtension(attachment.FileName);
-        var filePath = Path.Combine("wwwroot/uploads/messages", fileName);
-        Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
-        using (var stream = new FileStream(filePath, FileMode.Create))
-        {
-            await attachment.CopyToAsync(stream);
-        }
-        message.AttachmentPath = "/uploads/messages/" + fileName;
-        message.AttachmentFileName = attachment.FileName;
-    }
 
     _context.Messages.Add(message);
     await _context.SaveChangesAsync();

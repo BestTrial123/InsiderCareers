@@ -19,32 +19,33 @@
         <h2 class="fw-bold mb-4">Compose Message</h2>
         <div class="panel" style="max-width: 1200px;">
             <form asp-controller="Account" asp-action="Compose" method="post" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label class="form-label">To (email)</label>
-                    <input type="email" name="RecipientEmail" class="form-control" required
-                           style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: white;">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Subject</label>
-                    <input type="text" name="Subject" class="form-control" required
-                           style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: white;">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Message</label>
-                    <textarea name="Body" rows="20" class="form-control" required
-                              style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: white;"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Attachment (resume, cover letter, etc.)</label>
-                    <input type="file" name="attachment" class="form-control" accept=".pdf,.doc,.docx,.jpg,.png">
-                </div>
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Send</button>
-                    <a asp-controller="Account" asp-action="Message" class="btn btn-outline-secondary">Cancel</a>
-                </div>
-            </form>
-        </div>
+    <input type="hidden" name="recipientId" value="@ViewData["RecipientId"]" />
+    <input type="hidden" name="recipientType" value="@ViewData["RecipientType"]" />
+
+    <div class="mb-3">
+        <label class="form-label">To</label>
+        <input type="text" class="form-control" value="@ViewData["RecipientName"] (@ViewData["RecipientEmail"])" disabled
+            style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:white;">
     </div>
+    <div class="mb-3">
+        <label class="form-label">Subject</label>
+        <input type="text" name="subject" class="form-control" required
+            style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:white;">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Message</label>
+        <textarea name="body" rows="20" class="form-control" required
+            style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:white;"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Attachment (resume, cover letter, etc.)</label>
+        <input type="file" name="attachment" class="form-control" accept=".pdf,.doc,.docx,.jpg,.png">
+    </div>
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Send</button>
+        <a asp-controller="Account" asp-action="Message" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</form>
 
 </body>
 </html>
