@@ -401,7 +401,7 @@ public async Task<IActionResult> Compose(int recipientId, string recipientType, 
         RecipientId = recipientId,
         Subject = subject,
         Body = body,
-        SentDate = DateTime.Now,
+        SentDate = DateTime.UtcNow,
         IsRead = false,
         AttachmentPath = attachmentPath,
         AttachmentFileName = attachmentFileName
