@@ -1,141 +1,113 @@
 @{
     ViewData["Title"] = "Admin Dashboard";
+
+    string adminName = ViewBag.AdminName ?? "Admin";
+    string initials = "AD";
+    var parts = adminName.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+    if (parts.Length >= 2) { initials = ("" + parts[0][0] + parts[1][0]).ToUpper(); }
+    else if (parts.Length == 1 && parts[0].Length > 0) { initials = parts[0].Substring(0, System.Math.Min(2, parts[0].Length)).ToUpper(); }
 }
 
-<div class="ps-0 pt-3">
-    <h2>Admin Dashboard</h2>
-    <p class="mb-0" style="color:#cbd5e1;">@ViewBag.AdminName</p>
-    <p class="mb-0" style="color:#cbd5e1;">@ViewBag.AdminEmail</p>
-</div>
+<style>
+    .admin-dash{
+        --bg-0:#0a0c16;
+        --surface:#141a30;
+        --surface-2:#171d38;
+        --border-c:#252c4a;
+        --text-hi:#f2f3fb;
+        --text-mid:#a7add0;
+        --text-low:#6b7196;
+        --violet:#7c5cff;
+        --violet-2:#a78bfa;
+        --teal:#22c39a;
+        font-family:'Inter',sans-serif;
+        color:var(--text-hi);
+        background:
+            radial-gradient(1100px 600px at 85% -10%, rgba(124,92,255,0.16), transparent 60%),
+            radial-gradient(900px 500px at -10% 90%, rgba(34,195,154,0.08), transparent 55%),
+            var(--bg-0);
+        border-radius:20px;
+        padding:28px 28px 40px;
+        margin:-1rem;
+    }
+    .admin-dash h1,.admin-dash h2,.admin-dash h5{font-family:'Space Grotesk',sans-serif;}
+    .admin-dash .topbar{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px;margin-bottom:26px;}
+    .admin-dash h2{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin-bottom:4px;}
+    .admin-dash .who{display:flex;align-items:center;gap:10px;margin-top:12px;}
+    .admin-dash .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--violet-2),var(--violet));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0;}
+    .admin-dash .who .name{font-size:14px;font-weight:600;color:var(--text-hi);}
+    .admin-dash .who .email{font-size:12px;color:var(--text-low);}
+    .admin-dash .clock{text-align:right;}
+    .admin-dash .clock .time{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:600;letter-spacing:-0.02em;}
+    .admin-dash .clock .time span{font-size:14px;color:var(--violet-2);margin-left:4px;font-weight:600;}
+    .admin-dash .clock .date{color:var(--text-mid);font-size:13px;margin-top:2px;}
 
-<div style="height: 140px;"></div>
-<div class="row g-3 mb-4">
-    <div class="col-md-3">
-        <div class="card p-3 text-white" style="background:#0f2f4f;">
-            <div class="small">Total Clicks</div>
-            <div class="fs-3 fw-bold">@ViewBag.TotalClicks</div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card p-3 text-white" style="background:#14532d;">
-            <div class="small">Total Earnings</div>
-            <div class="fs-3 fw-bold">$@ViewBag.TotalEarnings</div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card p-3 text-white" style="background:#374151;">
-            <div class="small">Rate per Click</div>
-            <div class="fs-3 fw-bold">$@ViewBag.RatePerClick</div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card p-3 text-white" style="background:#1e3a8a;">
-            <div class="small">Jobs Posted</div>
-            <div class="fs-3 fw-bold">@ViewBag.TotalJobs</div>
-        </div>
-    </div>
-</div>
+    .admin-dash .card{background:var(--surface);border:1px solid var(--border-c);border-radius:16px;color:var(--text-hi);}
+    .admin-dash .stat-card .small{font-size:13px;opacity:.85;color:inherit;}
+    .admin-dash .stat-card .fs-3{font-family:'Space Grotesk',sans-serif;}
+    .admin-dash .stat-clicks{background:linear-gradient(135deg,#1e3a8a,#1d2a63);border:none;}
+    .admin-dash .stat-earnings{background:linear-gradient(135deg,#0f6e56,#0a4b3c);border:none;}
+    .admin-dash .stat-rate{background:var(--surface);}
+    .admin-dash .stat-jobs{background:linear-gradient(135deg,#312e81,#4338ca);border:none;}
 
-<div class="card p-3 mb-4">
-    <div class="d-flex justify-content-between align-items-center">
+    .admin-dash h5{color:var(--text-hi);font-size:16px;font-weight:600;}
+    .admin-dash .text-muted{color:var(--text-low) !important;}
+
+    .admin-dash .btn-outline-primary{color:var(--text-hi);border-color:var(--border-c);background:transparent;}
+    .admin-dash .btn-outline-primary:hover{background:var(--surface-2);border-color:var(--violet-2);color:var(--text-hi);}
+    .admin-dash .btn-outline-danger{color:#f2f3fb;border-color:#7f1d1d;background:transparent;}
+    .admin-dash .btn-outline-danger:hover{background:#3a1414;border-color:#ef4444;}
+
+    .admin-dash ul.list-unstyled li{border-bottom-color:var(--border-c) !important;}
+    .admin-dash ul.list-unstyled small{color:var(--text-low);}
+
+    .admin-dash .table{color:var(--text-hi);}
+    .admin-dash .table thead th{color:var(--text-mid);font-weight:600;font-size:13px;border-bottom-color:var(--border-c);}
+    .admin-dash .table td{border-bottom-color:var(--border-c);}
+    .admin-dash .badge{font-weight:600;border-radius:999px;padding:5px 12px;}
+
+    @@media (max-width:900px){
+        .admin-dash{padding:20px 16px 32px;margin:-0.5rem;}
+        .admin-dash .clock .time{font-size:26px;}
+    }
+</style>
+
+<div class="admin-dash">
+
+    <div class="topbar">
         <div>
-            <h5 class="mb-1">Employer Verification</h5>
-            <p class="mb-0 text-muted small">@ViewBag.PendingEmployers pending employer(s) awaiting review</p>
+            <h2 id="greetingText">Good morning, @adminName.Split(' ')[0] 👋</h2>
+            <p class="mb-0" style="color:var(--text-mid);font-size:14px;">Admin dashboard · Insider Careers</p>
+            <div class="who">
+                <div class="avatar">@initials</div>
+                <div>
+                    <div class="name">@ViewBag.AdminName</div>
+                    <div class="email">@ViewBag.AdminEmail</div>
+                </div>
+            </div>
         </div>
-        <a asp-controller="Account" asp-action="VerifyEmployers" class="btn btn-outline-primary">
-            Verify Employers
-        </a>
-    </div>
-</div>
-<div class="card p-3 mb-4">
-    <div class="d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Manage Users</h5>
-        <div>
-            <a asp-controller="Account" asp-action="ManageEmployers" class="btn btn-outline-primary me-2">Manage Employers</a>
-            <a asp-controller="Account" asp-action="ManageJobSeekers" class="btn btn-outline-primary">Manage Job Seekers</a>
-        </div>
-    </div>
-</div>
-
-<div class="row g-3 mb-4">
-    <div class="col-md-7">
-        <div class="card p-3 h-100">
-            <h5>Clicks per Job</h5>
-            <canvas id="clicksChart" height="100"></canvas>
+        <div class="clock">
+            <div class="time" id="liveTime">--:-- <span id="ampm">--</span></div>
+            <div class="date" id="liveDate">Loading date…</div>
         </div>
     </div>
-    <div class="col-md-5">
-        <div class="card p-3 h-100">
-            <h5>Recent Activity</h5>
-            <ul class="list-unstyled mb-0">
-                @foreach (dynamic job in ViewBag.RecentJobs)
-                {
-                    <li class="d-flex justify-content-between border-bottom py-2">
-                        <span>
-                            <strong>@job.Title</strong>
-                            <br />
-                            <small class="text-muted">@job.Employer?.CompanyName</small>
-                        </span>
-                        <span class="text-muted small align-self-center">New Job</span>
-                    </li>
-                }
-            </ul>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card stat-card stat-clicks p-3 text-white">
+                <div class="small">Total Clicks</div>
+                <div class="fs-3 fw-bold">@ViewBag.TotalClicks</div>
+            </div>
         </div>
-    </div>
-</div>
-
-<div class="card p-3 mb-4">
-    <h5>Recent Employer Signups</h5>
-    <table class="table align-middle mb-0">
-        <thead>
-            <tr>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Business Type</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (dynamic emp in ViewBag.RecentEmployers)
-            {
-                <tr>
-                    <td>@emp.CompanyName</td>
-                    <td>@emp.ContactName</td>
-                    <td>@emp.BusinessType</td>
-                    <td>
-                        @if (emp.InterviewStatus)
-                        {
-                            <span class="badge" style="background:#14532d;">Verified</span>
-                        }
-                        else
-                        {
-                            <span class="badge" style="background:#6b7280;">Pending</span>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<div class="mt-4">
-    <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">Logout</a>
-</div>
-
-@section Scripts {
-    <script>
-        const ctx = document.getElementById('clicksChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize((object)ViewBag.JobLabels)),
-                datasets: [{
-                    label: 'Clicks',
-                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize((object)ViewBag.JobClicks)),
-                    backgroundColor: '#1e3a8a'
-                }]
-            }
-        });
-    </script>
-}
-    
+        <div class="col-md-3">
+            <div class="card stat-card stat-earnings p-3 text-white">
+                <div class="small">Total Earnings</div>
+                <div class="fs-3 fw-bold">$@ViewBag.TotalEarnings</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stat-card stat-rate p-3">
+                <div class="small" style="color:var(--text-mid);">Rate per Click</div>
+                <div class="fs-3 fw-bold">$@ViewBag.RatePerClick</div>
+            </div>
+        </div>
