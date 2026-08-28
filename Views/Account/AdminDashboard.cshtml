@@ -235,7 +235,7 @@ background:rgba(34,195,154,0.15);color:var(--teal);white-space:nowrap;
             <div class="sub">Pending employer accounts awaiting review</div>
             <div class="verify-row">
                 <p>0 pending employer(s) awaiting review</p>
-                <button class="btn btn-outline" onclick="sendPromptSafe('Show me pending employer verifications')">Verify employers</button>
+                <a asp-controller="Account" asp-action="VerifyEmployers" class="btn btn-outline">Verify employers</a>
             </div>
 
             <div style="height:1px;background:var(--border);margin:20px 0;"></div>
@@ -243,8 +243,8 @@ background:rgba(34,195,154,0.15);color:var(--teal);white-space:nowrap;
             <h2>Manage users</h2>
             <div class="sub">Employers and job seekers on the platform</div>
             <div class="btn-row">
-                <button class="btn btn-outline" onclick="sendPromptSafe('Open manage employers')">Manage employers</button>
-                <button class="btn btn-outline" onclick="sendPromptSafe('Open manage job seekers')">Manage job seekers</button>
+                <a asp-controller="Account" asp-action="ManageEmployers" class="btn btn-outline">Manage employers</a>
+                <a asp-controller="Account" asp-action="ManageJobSeekers" class="btn btn-outline">Manage job seekers</a>
             </div>
         </div>
     </section>
