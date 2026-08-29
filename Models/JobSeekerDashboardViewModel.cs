@@ -7,6 +7,8 @@ namespace InsiderCareers.Models
         public int SavedCount { get; set; }
         public int ViewedCount { get; set; }
         public int DeniedCount { get; set; }
+        public int UnreadMessageCount { get; set; }
+
         public List<JobApplication> InterviewAppointments { get; set; } = new();
         public List<Job> JobFeed { get; set; } = new();
     }

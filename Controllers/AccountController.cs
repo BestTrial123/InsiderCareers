@@ -445,6 +445,8 @@ public async Task<IActionResult> JobSeekerDashboard(string? q, string? location)
                 return RedirectToAction("Login");
 
     var applications = jobSeeker.Applications;
+    var unreadCount = await _context.Messages
+    .CountAsync(m => m.RecipientId == jobSeekerId && m.RecipientType == "JobSeeker" && !m.IsRead);
 
     var viewModel = new JobSeekerDashboardViewModel
     {
@@ -453,6 +455,7 @@ public async Task<IActionResult> JobSeekerDashboard(string? q, string? location)
         SavedCount = applications.Count(a => a.Status == "Saved"),
         ViewedCount = applications.Count(a => a.Status == "Viewed"),
         DeniedCount = applications.Count(a => a.Status == "Denied"),
+        UnreadMessageCount = unreadCount,
         InterviewAppointments = applications
             .Where(a => a.Status == "Interview" && a.InterviewDate != null)
             .OrderBy(a => a.InterviewDate)
