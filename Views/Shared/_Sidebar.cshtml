@@ -7,9 +7,9 @@
 {
     <!-- JobSeeker Sidebar -->
     <div class="jsd-sidebar">
-            <div class="pt-2 text-center mb-2">
-        <img src="~/Images/logo.png" style="height: 80px;" />
-    </div>
+        <div class="pt-2 text-center mb-2">
+            <img src="~/Images/logo.png" style="height: 80px;" />
+        </div>
         <div class="jsd-top-icons">
             <a href="javascript:void(0)" onclick="history.back()" title="Back"><i class="bi bi-arrow-left"></i></a>
             <a asp-controller="Account" asp-action="Message" title="Messages"><i class="bi bi-envelope"></i></a>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="jsd-photo"></div>
-        
+
         <div class="jsd-mini-icons">
             <i class="bi bi-gear"></i>
             <i class="bi bi-eye"></i>
@@ -25,9 +25,10 @@
 
         <div class="jsd-fullname">@userName</div>
         <div class="jsd-contact">
-    @Context.Session.GetString("UserEmail")<br />
-    @Context.Session.GetString("UserPhone")
-</div>
+            @Context.Session.GetString(key: "UserEmail")<br />
+            @Context.Session.GetString(key: "UserPhone")
+        </div>
+
         <div class="jsd-nav">
             <a asp-controller="Account" asp-action="JobSeekerDashboard" class="active">Home</a>
             <a asp-controller="Account" asp-action="Message">Message</a>
@@ -41,6 +42,7 @@
         </div>
     </div>
 }
+
 else
 {
     <!-- Employer / Admin Sidebar -->
