@@ -18,23 +18,26 @@
 <div class="jsd-page">
 
     <div class="jsd-sidebar">
-        <div class="jsd-top-icons">
+    <div class="pt-2 text-center mb-2">
+        <img src="~/Images/logo.png" style="height: 80px;" />
+    </div>
+    <div class="jsd-top-icons">
             <a href="javascript:void(0)" onclick="history.back()" title="Back"><i class="bi bi-arrow-left"></i></a>
             <a asp-controller="Account" asp-action="Message" title="Messages"><i class="bi bi-envelope"></i></a>
             <a asp-controller="Account" asp-action="JobSeekerDashboard" title="Profile"><i class="bi bi-person-circle"></i></a>
         </div>
 
         @if (!string.IsNullOrEmpty(Model.JobSeeker.PhotoPath))
-        {
-            <img src="@Model.JobSeeker.PhotoPath" class="jsd-photo" alt="Profile photo" />
-        }
-        else
-        {
-            <div class="jsd-photo"></div>
-        }
+{
+    <img src="@Model.JobSeeker.PhotoPath" class="jsd-photo" alt="Profile photo" />
+}
+else
+{
+    <div class="jsd-photo"></div>
+}
 
         <div class="jsd-mini-icons">
-            <i class="bi bi-briefcase"></i>
+            <i class="bi bi-gear"></i>
             <i class="bi bi-eye"></i>
         </div>
 
@@ -47,7 +50,7 @@
         <div class="jsd-nav">
             <a asp-controller="Account" asp-action="JobSeekerDashboard" class="active">Profile</a>
             <a asp-controller="Account" asp-action="Message">Message</a>
-            <a asp-controller="Account" asp-"Appointments">Appointments</a>
+            <a asp-controller="Account" asp-action="Appointments">Appointments</a>
             <a asp-controller="Account" asp-action="Settings">Settings</a>
         </div>
 
